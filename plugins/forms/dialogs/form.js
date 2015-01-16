@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -61,6 +61,7 @@ CKEDITOR.dialog.add( 'form', function( editor ) {
 			title: editor.lang.forms.form.title,
 			elements: [ {
 				id: 'txtName',
+				bidi: true,
 				type: 'text',
 				label: editor.lang.common.name,
 				'default': '',

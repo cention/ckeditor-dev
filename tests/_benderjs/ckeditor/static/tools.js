@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (c) 2015, CKSource - Frederico Knabben. All rights reserved.
  * Licensed under the terms of the MIT License (see LICENSE.md).
  */
 
@@ -913,46 +913,13 @@
 		},
 
 		/**
-		 * Creates editors defined in `editorsDefinitions` and passes them along with editorBots to the callback.
-		 *
-		 * @param {Object} editors Definitions map of the editors definitions in the same format as `editorBot` use.
-		 * @param {Function} callback Function called when all of the editors will be created.
-		 */
-		setUpEditors: function( editorsDefinitions, callback ) {
-			var names = [],
-				editors = {},
-				bots = {};
-
-			for ( var e in editorsDefinitions ) {
-				names.push( e );
-			}
-
-			next();
-
-			function next() {
-				var name = names.shift();
-
-				if ( !name ) {
-					callback( editors, bots );
-					return;
-				}
-
-				bender.editorBot.create( editorsDefinitions[ name ], function( bot ) {
-					bots[ name ] = bot;
-					editors[ name ] = bot.editor;
-					next();
-				} );
-			}
-		},
-
-		/**
 		 * Multiplies inputTests for every editor.
 		 *
-		 * @param {Object} editors
+		 * @param {Object} editorsDefinitions editors definitions.
 		 * @param {Object} inputTests Tests to apply on every editor.
 		 * @returns {Object} Created tests for every editor.
 		 */
-		createTestsForEditors: function( editors, inputTests ) {
+		createTestsForEditors: function( editorsNames, inputTests ) {
 			var outputTests = {},
 				specificTestName,
 				specialMethods = {
@@ -960,7 +927,8 @@
 					'async:init': 1,
 					'setUp': 1,
 					'tearDown': 1
-				};
+				},
+				i, editorName;
 
 			for ( var method in specialMethods ) {
 				if ( inputTests[ method ] ) {
@@ -968,13 +936,15 @@
 				}
 			}
 
-			for ( var editorName in editors ) {
+			for ( i = 0; i < editorsNames.length; i++ ) {
+				editorName = editorsNames[ i ];
+
 				for ( var testName in inputTests ) {
 					if ( specialMethods[ testName ] ) {
 						continue;
 					}
 
-					specificTestName = testName + ' (' + editors[ editorName ].name + ')';
+					specificTestName = testName + ' (' + editorName + ')';
 
 					// Avoid silent failure.
 					if ( outputTests[ specificTestName ] ) {
@@ -983,7 +953,7 @@
 
 					outputTests[ specificTestName ] = ( function( testName, editorName ) {
 						return function() {
-							inputTests[ testName ]( editors[ editorName ] );
+							inputTests[ testName ]( bender.editors[ editorName ] );
 						};
 					} )( testName, editorName );
 				}
@@ -1128,7 +1098,7 @@
 			}
 
 			return function( element, html ) {
-				root = element.getDocument().getBody();
+				root = element;
 
 				// First, let's assume that there will be no range.
 				range = null;

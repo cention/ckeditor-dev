@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -81,6 +81,8 @@
 						else if ( !editor.config.pasteFromWordPromptCleanup || ( forceFromWord || confirm( editor.lang.pastefromword.confirmCleanup ) ) ) // jshint ignore:line
 							data.dataValue = CKEDITOR.cleanWord( mswordHtml, editor );
 
+						// Reset forceFromWord.
+						forceFromWord = 0;
 					} );
 
 					// The cleanup rules are to be loaded, we should just cancel

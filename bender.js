@@ -33,7 +33,7 @@ var config = {
 			// Latest of the old API (1.8.3)
 			// Latest of the 1.* branch
 			// Latest of the 2.* branch
-			jquery: [ '1.8.3', '1.11.1', '2.1.1' ]
+			jQuery: [ '1.8.3', '1.11.1', '2.1.1' ]
 		},
 
 		'Core': {
@@ -89,7 +89,6 @@ var config = {
 				'tests/plugins/magicline/widgets#test commands[next], last block in nested': 'env.gecko',
 
 				// Safari (#12690)
-				'tests/plugins/font/font#test apply font size over another font size (collapsed selection in empty span)': 'env.safari',
 				'tests/plugins/font/font#test apply font size over another font size (deeply nested collapsed selection)': 'env.safari'
 			}
 		},
@@ -122,11 +121,7 @@ var config = {
 			paths: [
 				'utils/**',
 				'!**/_*/**'
-			],
-			regressions: {
-				// Safari (#12690)
-				'tests/utils/selection/setgetwithhtml#test setSelection - in empty inline element': 'env.safari'
-			}
+			]
 		}
 	}
 };

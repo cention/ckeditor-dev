@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -93,9 +93,9 @@
 
 			if ( tabText ) {
 				editor.on( 'key', function( ev ) {
-					// TAB
+					// TAB.
 					if ( ev.data.keyCode == 9 ) {
-						editor.insertHtml( tabText );
+						editor.insertText( tabText );
 						ev.cancel();
 					}
 				} );

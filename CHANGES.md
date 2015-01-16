@@ -5,6 +5,8 @@ CKEditor 4 Changelog
 
 New Features:
 
+* [#10986](http://dev.ckeditor.com/ticket/10986): Added support for changing dialog's input and textarea text directions by using *Shift+Alt+Home/End* keystrokes. The direction is stored in the value of the input by prepending [`\u202A`](http://unicode.org/cldr/utility/character.jsp?a=202A) or [`\u202B`](http://unicode.org/cldr/utility/character.jsp?a=202B) marker to it. Read more in the [documentation](http://docs.ckeditor.com/#!/api/CKEDITOR.dialog.definition.textInput-property-bidi). Thanks to [edithkk](https://github.com/edithkk)!
+* [#12770](http://dev.ckeditor.com/ticket/12770): Added support for passing [widget](http://docs.ckeditor.com/#!/api/CKEDITOR.plugins.widget)'s startup data as a widget command's argument. Thanks to [Rebrov Boris](https://github.com/zipp3r) and [Tieme van Veen](https://github.com/tiemevanveen)!
 * [#10931](http://dev.ckeditor.com/ticket/10931): Introduce ability to insert widgets into another widget's nested editables. Note that unless nested editable's [allowed content](http://docs.ckeditor.com/#!/api/CKEDITOR.plugins.widget.nestedEditable.definition-property-allowedContent) is defined precisely since CKEditor 4.5 some widget buttons may become enabled.
 * [#11437](http://dev.ckeditor.com/ticket/11437): Drag and Drop support.
   * [#11460](http://dev.ckeditor.com/ticket/11460): Custom handling for dropped content in the editor.
@@ -28,6 +30,7 @@ Fixed Issues:
 
 Other Changes:
 
+* [#8024](http://dev.ckeditor.com/ticket/8024): Swapped behavior of the Split Table Cell Vertically and Horizontally features to be more intuitive. Thanks to [kevinisagit](https://github.com/kevinisagit)!
 * [#10903](http://dev.ckeditor.com/ticket/10903): Performance improvements for [`addClass`](http://docs.ckeditor.com/#!/api/CKEDITOR.dom.element-method-addClass), [`removeClass`](http://docs.ckeditor.com/#!/api/CKEDITOR.dom.element-method-removeClass) and [`hasClass`](http://docs.ckeditor.com/#!/api/CKEDITOR.dom.element-method-hasClass) methods.
 * [#11856](http://dev.ckeditor.com/ticket/11856): jQuery adapter throw an meaningful error if CKEditor or jQuery is not loaded.
 * [#12150](http://dev.ckeditor.com/ticket/12150): Expose [`getNestedEditable`](http://docs.ckeditor.com/#!/api/CKEDITOR.plugins.widget-static-method-getNestedEditable) and `is*` [widget helper](http://docs.ckeditor.com/#!/api/CKEDITOR.plugins.widget) functions.
@@ -36,9 +39,14 @@ Other Changes:
 
 Fixed Issues:
 
+* [#12157](http://dev.ckeditor.com/ticket/12157): Fixed: Lost text formatting when pressing *Tab* when [`config.tabSpaces`](http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-tabSpaces) config option was greater than zero.
+* [#12777](http://dev.ckeditor.com/ticket/12777): Fixed: The `table-layout` CSS property should be reset by skins. Thanks to [vita10gy](https://github.com/vita10gy)!
+* [#12812](http://dev.ckeditor.com/ticket/12812): Fixed: A uncaught security exception is thrown when [lineutils](http://docs.ckeditor.com/#!/api/CKEDITOR.plugins.lineutils) are used in an inline editor loaded in a cross-domain iframe. Thanks to [Vitaliy Zurian](https://github.com/thecatontheflat)!
 * [#12747](http://dev.ckeditor.com/ticket/12747): [IE8-10] Fixed: Opening a drop-down for a specific selection when editor is maximized results in incorrect drop-down panel position.
 * [#12735](http://dev.ckeditor.com/ticket/12735): Fixed: [`Config.fillEmptyBlocks`](http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-fillEmptyBlocks) should only apply when outputting data.
 * [#12750](http://dev.ckeditor.com/ticket/12750): Fixed: [Paste from Word](http://ckeditor.com/addon/pastefromword): strikethrough and underscore should have the same color as font.
+* [#10032](http://dev.ckeditor.com/ticket/10032): Fixed: [Paste from Word](http://ckeditor.com/addon/pastefromword) filter is executed for every paste after using the button.
+* [#12597](http://dev.ckeditor.com/ticket/12597): [Blink/Webkit] Fixed: Multi-byte Japanese chars entry not working properly after *Shift+Enter*.
 
 ## CKEditor 4.4.6
 
