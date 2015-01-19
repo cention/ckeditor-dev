@@ -12,12 +12,14 @@ CKEDITOR.plugins.add("cention_spellcheck", {
 		}
 	},
 
+	icons: "spellchecker",
+
 	init: function( editor ) {
 		var plugin = this;
 
 		this.config.suggestBox.position = this.positionSuggestBox();
 
-		editor.addCommand("cention_spellcheck", {
+		editor.addCommand("spellchecker", {
 			canUndo: false,
 			readOnly: 1,
 			exec: function() {
@@ -25,12 +27,12 @@ CKEDITOR.plugins.add("cention_spellcheck", {
 			}
 		});
 
-		editor.ui.addRichCombo("Cention_SpellCheckLanguageSelector", {
+		editor.ui.addRichCombo("SpellCheckerLanguage", {
 			label: I("Language"),
 			title: I("Language"),
 			toolbar: "spellchecker,5",
 			panel: {
-				css: [CKEDITOR.skin.getPath("editor")].concat(editor.config.contentsCss),
+				css: [ CKEDITOR.skin.getPath("editor") ].concat(editor.config.contentsCss),
 				multiSelect: false,
 				attributes: {
 					"aria-label": I("Language")
@@ -47,10 +49,14 @@ CKEDITOR.plugins.add("cention_spellcheck", {
 				}
 			},
 			onRender: function() {
+				//console.log('onRender');
 				var languages = editor.config.spellCheckLanguages;
+				//console.log('languages: ' + languages);
 				for( var i = 0; i < languages.length; i++ ) {
 					var language = languages[i];
+					//console.log('language: ' + language);
 					if( language.selected ) {
+						//console.log('yes');
 						this.setValue(language.value);
 						plugin.config.lang = language.id;
 					}
@@ -61,17 +67,17 @@ CKEDITOR.plugins.add("cention_spellcheck", {
 				this.setValue(selected);
 				for( var i = 0; i < languages.length; i++ ) {
 					var language = languages[i];
-					if( selected == langauge.value ) {
+					if( selected == language.value ) {
 						plugin.config.lang = language.id;
 						break;
 					}
 				}
 			},
-			onSetValue: function( language ) {
-				if( !language ) {
+			onSetValue: function( value ) {
+				if( !value ) {
 					var languages = editor.config.spellCheckLanguages;
 					for( i = 0; i < languages.length; i++ ) {
-						language = languages[i];
+						var language = languages[i];
 						if( plugin.config.lang == language.id ) {
 							this._.value = language.value;
 							var label = this.document.getById("cke_" + this.id + "_text");
@@ -90,21 +96,22 @@ CKEDITOR.plugins.add("cention_spellcheck", {
 			}
 		});
 
-		editor.ui.addButton("Cention_SpellCheck", {
+		editor.ui.addButton("SpellChecker", {
 			label: I("Perform Spell Check"),
-			command: "cention_spellcheck",
+			command: "spellchecker",
 			toolbar: "spellchecker,10"
 		});
 
 		editor.on("saveSnapshot", function() {
 			plugin.destroy();
-		})
+		});
 	},
 	create: function() {
 		this.editor.setReadOnly(true);
-		this.editor.commands.cention_spellcheck.toggleState();
-		jQuery('.cke_button__cention_spellcheck_label').text(I('Finish spell check'));
-		jQuery('.cke_button__cention_spellcheck_icon').removeClass('cke_button__cention_spellcheck_icon').addClass('cke_button__cention_spellcheck_icon_select');
+		this.editor.commands.spellchecker.toggleState();
+		jQuery('.cke_button__spellchecker_label').text(I('Finish spell check'));
+		jQuery('.cke_button__spellchecker_icon').removeClass('cke_button__spellchecker_icon');
+		jQuery('.cke_button__spellchecker_icon').addClass('cke_button__spellchecker_icon_select');
 		this.editorWindow = this.editor.document.getWindow().$;
 		this.createSpellchecker();
 		this.spellchecker.check();
@@ -118,9 +125,10 @@ CKEDITOR.plugins.add("cention_spellcheck", {
 			this.spellchecker.destroy();
 			this.spellchecker = null;
 			this.editor.setReadOnly(false);
-			this.editor.commands.cention_spellcheck.toggleState();
-			jQuery('.cke_button__cention_spellcheck_label').text(I('Perform spell check'));
-			jQuery('.cke_button__cention_spellcheck_icon_select').removeClass('cke_button__cention_spellcheck_icon_select').addClass('cke_button__cention_spellcheck_icon');
+			this.editor.commands.spellchecker.toggleState();
+			jQuery('.cke_button__spellchecker_label').text(I('Perform spell check'));
+			jQuery('.cke_button__spellchecker_icon_select').removeClass('cke_button__spellchecker_icon_select');
+			jQuery('.cke_button__spellchecker_icon_select').addClass('cke_button__spellchecker_icon');
 			jQuery(this.editorWindow).off(".spellchecker")
 		}
 	},
