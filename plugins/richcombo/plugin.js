@@ -311,17 +311,21 @@ CKEDITOR.plugins.add( 'richcombo', {
 			},
 
 			setValue: function( value, text ) {
-				this._.value = value;
+				if ( this.onSetValue ) {
+					this.onSetValue.call( this, value, text );
+				} else {
+					this._.value = value;
 
-				var textElement = this.document.getById( 'cke_' + this.id + '_text' );
-				if ( textElement ) {
-					if ( !( value || text ) ) {
-						text = this.label;
-						textElement.addClass( 'cke_combo_inlinelabel' );
-					} else
-						textElement.removeClass( 'cke_combo_inlinelabel' );
+					var textElement = this.document.getById( 'cke_' + this.id + '_text' );
+					if ( textElement ) {
+						if ( !( value || text ) ) {
+							text = this.label;
+							textElement.addClass( 'cke_combo_inlinelabel' );
+						} else
+							textElement.removeClass( 'cke_combo_inlinelabel' );
 
-					textElement.setText( typeof text != 'undefined' ? text : value );
+						textElement.setText( typeof text != 'undefined' ? text : value );
+					}
 				}
 			},
 
