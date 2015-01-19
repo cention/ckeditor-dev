@@ -1,0 +1,23 @@
+CKEDITOR.plugins.setLang('youtube', 'en', {
+	button : I('Embed YouTube Video'),
+	title : I('Embed YouTube Video'),
+	txtEmbed : I('Paste Embed Code Here'),
+	txtUrl : I('Paste YouTube Video URL'),
+	txtWidth : I('Width'),
+	txtHeight : I('Height'),
+	chkRelated : I('Show suggested videos at the video\'s end'),
+	txtStartAt : I('Start at (ss or mm:ss or hh:mm:ss)'),
+	chkPrivacy : I('Enable privacy-enhanced mode'),
+	chkOlderCode : I('Use old embed code'),
+	chkAutoplay: I('Autoplay'),
+	noCode : I('You must input an embed code or URL'),
+	invalidEmbed : I('The embed code you\'ve entered doesn\'t appear to be valid'),
+	invalidUrl : I('The URL you\'ve entered doesn\'t appear to be valid'),
+	or : I('or'),
+	noWidth : I('You must inform the width'),
+	invalidWidth : I('Inform a valid width'),
+	noHeight : I('You must inform the height'),
+	invalidHeight : I('Inform a valid height'),
+	invalidTime : I('Inform a valid start time'),
+	txtResponsive : I('Make Responsive (ignore width and height, fit to width)')
+});
