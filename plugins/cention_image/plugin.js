@@ -1,8 +1,10 @@
 CKEDITOR.plugins.add("cention_image", {
 	requires: "panelbutton,floatpanel",
 
+	icons: "image",
+
 	init: function( editor ) {
-		editor.ui.add("Cention_Image", CKEDITOR.UI_PANELBUTTON, {
+		editor.ui.add("Image", CKEDITOR.UI_PANELBUTTON, {
 			label: I("Image"),
 			title: I("Image"),
 			modes: {
@@ -22,40 +24,41 @@ CKEDITOR.plugins.add("cention_image", {
 				block.element.getDocument().getBody().setStyle("overflow", "hidden");
 
 				block.element.setHtml(function() {
-					var output = [],
-						g = null,
-						h = CKEDITOR.tools.addFunction(function(a) {
-							g || (g = panel._.iframe.getFrameDocument().getById("cention_image_first_item"));
-							g.removeStyle("background-color");
-							var a = new CKEDITOR.dom.element(block);
-							a.setStyle("background-color", "rgb(163, 215, 255)");
-							g = a
-						}),
-						f = CKEDITOR.tools.addFunction(function() {
+					var output = [];
+					var selectedTd = null;
+					var	selectFunction = CKEDITOR.tools.addFunction(function( td ) {
+							if( !selectedTd ) {
+								selectedTd = panel._.iframe.getFrameDocument().getById("cention_image_first_item");
+							}
+							selectedTd.removeStyle("background-color");
+							var selected = new CKEDITOR.dom.element(td);
+							selected.setStyle("background-color", "rgb(163, 215, 255)");
+							selectedTd = selected;
+						});
+					var cancelFunction = CKEDITOR.tools.addFunction(function() {
 							editor.focus();
 							panel.hide();
-						}),
-						i = CKEDITOR.tools.addFunction(function() {
-							g || (g = panel._.iframe.getFrameDocument().getById("cention_image_first_item"));
+						});
+					var insertFunction = CKEDITOR.tools.addFunction(function() {
+							if( !selectedTd ) {
+								selectedTd = panel._.iframe.getFrameDocument().getById("cention_image_first_item");
+							}
 							editor.focus();
 							panel.hide();
 							editor.fire("saveSnapshot");
-							var a;
-							a: {
-								a = g.getChildren();
-								for( var c = a.count(), e = 0; e < c; e++ ) {
-									var f = new CKEDITOR.dom.element(a.getItem(e).$);
-									if( f.getName() == "img" ) {
-										a = f;
-										break a
-									}
+							var selectedImg = null;
+							var children = selectedTd.getChildren();
+							for( var i = 0; i < children.count(); i++ ) {
+								var child = new CKEDITOR.dom.element(children.getItem(i).$);
+								if( child.getName() == "img" ) {
+									selectedImg = child;
+									break;
 								}
-								a = void 0;
 							}
-							if( a ) {
+							if( selectedImg ) {
 								editor.fire("saveSnapshot");
 								var img = editor.document.createElement("img");
-								img.setAttribute("src", a.getAttribute("src"));
+								img.setAttribute("src", selectedImg.getAttribute("src"));
 								editor.insertElement(img);
 								editor.fire("saveSnapshot");
 							}
@@ -70,15 +73,15 @@ CKEDITOR.plugins.add("cention_image", {
 						output.push("\t\t\t</td>");
 					}
 
-					for( var e = 0; e < editor.___fileArchiveImages.length; e++ ) {
-						var image = editor.___fileArchiveImages[e];
+					for( var i = 0; i < editor.___fileArchiveImages.length; i++ ) {
+						var image = editor.___fileArchiveImages[i];
 						output.push('\t\t\t<td style="padding-left: 5px; padding-top: 5px; padding-bottom: 5px;">');
 						output.push('\t\t\t\t<table border="0" cellspacing="0" cellpadding="0" style="width: 128px; height: 128px;">');
 						output.push("\t\t\t\t\t<tr>");
-						if( e == 0 ) {
-							output.push('\t\t\t\t\t\t<td id="cention_image_first_item" align="center" style="width: 128px; height: 128px; border-radius: 5px 5px 5px 5px; border: 1px solid #A3D7FF;" onclick="CKEDITOR.tools.callFunction(', h, ', this);return false;">');
+						if( i == 0 ) {
+							output.push('\t\t\t\t\t\t<td id="cention_image_first_item" align="center" style="width: 128px; height: 128px; border-radius: 5px 5px 5px 5px; border: 1px solid #A3D7FF;" onclick="CKEDITOR.tools.callFunction(', selectFunction, ', this);return false;">');
 						} else {
-							output.push('\t\t\t\t\t\t<td align="center" style="width: 128px; height: 128px; border-radius: 5px 5px 5px 5px; border: 1px solid #A3D7FF;" onclick="CKEDITOR.tools.callFunction(', h, ', this);return false;">');
+							output.push('\t\t\t\t\t\t<td align="center" style="width: 128px; height: 128px; border-radius: 5px 5px 5px 5px; border: 1px solid #A3D7FF;" onclick="CKEDITOR.tools.callFunction(', selectFunction, ', this);return false;">');
 						}
 						output.push('\t\t\t\t\t\t\t<img src="', image.src, '" style="max-width: 120px; max-height: 120px;">');
 						output.push("\t\t\t\t\t\t</td>");
@@ -93,7 +96,7 @@ CKEDITOR.plugins.add("cention_image", {
 					output.push('<table border="0" cellspacing="0" cellpadding="0" style=" background: none repeat scroll 0 0 #F2F2F2; border-top: 1px solid #A5A5A5; margin-top: 0px;">');
 					output.push("\t<tr>");
 					output.push('\t\t<td style="width: 100%;"></td>');
-					output.push('\t\t<td style="height: 20px; padding: 5px; cursor: pointer; white-space: nowrap;" onclick="CKEDITOR.tools.callFunction(', i, ');return false;">');
+					output.push('\t\t<td style="height: 20px; padding: 5px; cursor: pointer; white-space: nowrap;" onclick="CKEDITOR.tools.callFunction(', insertFunction, ');return false;">');
 					output.push('\t\t\t<table border="0" cellspacing="0" cellpadding="0">');
 					output.push("\t\t\t\t<tr>");
 					output.push('\t\t\t\t\t<td style="border: 0px none; padding: 0px; background: none repeat scroll 0% 0% rgb(242, 242, 242); font-size: 10px; font-family: Verdana, Arial, Helvetica, sans-serif;">&nbsp;</td>');
@@ -106,7 +109,7 @@ CKEDITOR.plugins.add("cention_image", {
 					output.push("\t\t\t\t</tr>");
 					output.push("\t\t\t</table>");
 					output.push("\t\t</td>");
-					output.push('\t\t<td style="height: 20px; padding: 5px; cursor: pointer; white-space: nowrap;" onclick="CKEDITOR.tools.callFunction(', f, ');return false;">');
+					output.push('\t\t<td style="height: 20px; padding: 5px; cursor: pointer; white-space: nowrap;" onclick="CKEDITOR.tools.callFunction(', cancelFunction, ');return false;">');
 					output.push('\t\t\t<table border="0" cellspacing="0" cellpadding="0">');
 					output.push("\t\t\t\t<tr>");
 					output.push('\t\t\t\t\t<td style="border: 0px none; padding: 0px; background: none repeat scroll 0% 0% rgb(242, 242, 242); font-size: 10px; font-family: Verdana, Arial, Helvetica, sans-serif;">&nbsp;</td>');
