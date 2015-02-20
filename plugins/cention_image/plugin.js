@@ -69,7 +69,8 @@ CKEDITOR.plugins.add("cention_image", {
 					output.push("\t\t<tr>");
 
 					if( editor.___fileArchiveImages.length == 0 ) {
-						output.push('\t\t\t<td style="padding-left: 5px; padding-top: 5px; padding-bottom: 5px;"><span>' + I("No images have been uploaded to the area file archive.") + '</span>');
+						output.push('\t\t\t<td style="padding-left: 5px; padding-top: 5px; padding-bottom: 5px;">');
+						output.push('\t\t\t\t<span style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px;">' + I("No images have been uploaded to the area file archive.") + '</span>');
 						output.push("\t\t\t</td>");
 					}
 
