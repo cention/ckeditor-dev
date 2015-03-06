@@ -63,7 +63,7 @@ SEMVER_REGEX="^([0-9]+)\.([0-9]+)\.([0-9]+)(\-[0-9A-Za-z-]+)?(\+[0-9A-Za-z-]+)?$
 
 # Get version number from tag (if available and follows semantic versioning principles).
 # Use 2>/dev/null to block "fatal: no tag exactly matches", true is needed because of "set -e".
-TAG=$(git symbolic-ref -q --short HEAD || git describe --tags --exact-match 2>/dev/null) || true
+TAG=$(git symbolic-ref -q --short HEAD 2>/dev/null || git describe --tags --exact-match 2>/dev/null) || true
 # "Git Bash" does not support regular expressions.
 if echo $TAG | grep -E "$SEMVER_REGEX" > /dev/null
 then
