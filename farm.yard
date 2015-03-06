@@ -6,6 +6,6 @@
 	<phase id="install" depends="build">
 		<execute program="rm" arguments="-rf $(destination)/cention/share/ckeditor" />
 		<execute program="cp" arguments="-r dev/builder/release/ckeditor $(destination)/cention/share/" />
-		<execute program="ln" arguments="-s $(destination)/share/ckeditor $(destination)/share/ferite/webframework/Public/Resources/Javascript/ckeditor" />
+		<execute program="ln" arguments="-s /cention/share/ckeditor $(destination)/cention/share/ferite/webframework/Public/Resources/Javascript/ckeditor" />
 	</phase>
 </yard>
