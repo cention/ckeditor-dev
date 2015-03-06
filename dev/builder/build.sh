@@ -58,7 +58,7 @@ echo "Starting CKBuilder..."
 JAVA_ARGS=${ARGS// -t / } # Remove -t from arrgs
 
 VERSION="4.4.6 DEV"
-REVISION=$(git rev-parse --verify --short HEAD)
+REVISION=$(git rev-parse --verify --short HEAD 2>/dev/null) || true
 SEMVER_REGEX="^([0-9]+)\.([0-9]+)\.([0-9]+)(\-[0-9A-Za-z-]+)?(\+[0-9A-Za-z-]+)?$"
 
 # Get version number from tag (if available and follows semantic versioning principles).
