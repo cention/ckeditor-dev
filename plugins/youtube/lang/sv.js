@@ -1,0 +1,23 @@
+CKEDITOR.plugins.setLang('youtube', 'sv', {
+	button : 'Bädda in YouTube-video',
+	title : 'Bädda in YouTube-video',
+	txtEmbed : 'Klistra in "Bädda in"-kod här',
+	txtUrl : 'Klistra in YouTube-URL',
+	txtWidth : 'Bredd',
+	txtHeight : 'Höjd',
+	chkRelated : 'Visa föreslagna videor vid videons slut',
+	txtStartAt : 'Börja spela på (ss eller mm:ss eller hh:mm:ss)',
+	chkPrivacy : 'Aktivera förstärkt läge för integritet',
+	chkOlderCode : 'Använd gammal "Bädda in"-kod',
+	chkAutoplay: 'Spela automatiskt',
+	noCode : 'Du måste skriva in en "Bädda in"-kod eller en URL',
+	invalidEmbed : 'Den "Bädda in"-kod du skrev in verkar vara ogiltig',
+	invalidUrl : 'Den URL du skrev in verkar vara ogiltig',
+	or : 'eller',
+	noWidth : 'Du måste skriva in en bredd',
+	invalidWidth : 'Du måste skriva in en giltig bredd',
+	noHeight : 'Du måste skriva in en höjd',
+	invalidHeight : 'Du måste skriva in en giltig höjd',
+	invalidTime : 'Du måste skriva in en giltig start tid',
+	txtResponsive : 'Gör responsiv (ignorera bredd och höjd, passa till bredden)'
+});
