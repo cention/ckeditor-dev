@@ -25,5 +25,30 @@ bender.test(
 			} );
 
 		} );
+	},
+
+	// #13385.
+	'test getSnapshot returns empty string after editor destroyed': function() {
+		bender.editorBot.create( {}, function( bot ) {
+			this.wait( function() {
+				var editor = bot.editor;
+				editor.destroy();
+				assert.areSame( '', editor.getSnapshot() );
+			}, 0 );
+		} );
+	},
+
+	'test destroy editor before it is fully initialized': function() {
+		var name = 'test_editor',
+			element,
+			editor;
+
+		element = CKEDITOR.document.getById( name );
+
+		editor = CKEDITOR.replace( element );
+		assert.isMatching( editor.status, 'unloaded', 'The editor is not initialized' );
+		editor.destroy();
+
+		assert.isTrue( true, 'The editor can be destroyed before being fully initialized' );
 	}
 } );
