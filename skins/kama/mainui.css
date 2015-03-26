@@ -202,6 +202,7 @@ Special outer level classes used in this file:
 .cke_wysiwyg_div
 {
 	display: block;
+	width: 100% !important;
 	height: 100%;
 	overflow: auto;
 	padding: 0 8px;
