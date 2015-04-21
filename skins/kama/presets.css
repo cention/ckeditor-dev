@@ -34,4 +34,5 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 .cke_wysiwyg_frame, .cke_wysiwyg_div
 {
 	background-color: #fff;
+	width: 100% !important;
 }
