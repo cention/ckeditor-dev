@@ -80,17 +80,20 @@ CKEDITOR.plugins.add("cention_spellcheck", {
 						var language = languages[i];
 						if( plugin.config.lang == language.id ) {
 							this._.value = language.value;
-							var label = this.document.getById("cke_" + this.id + "_text");
-							if( label ) {
-								if( editor.readOnly ) {
-									label.addClass("cke_combo_inlinelabel");
-								} else {
-									label.removeClass("cke_combo_inlinelabel");
-								}
-								label.setText(language.value);
-							}
+							value = language.value;
 							break;
 						}
+					}
+				}
+				if( value ) {
+					var label = this.document.getById("cke_" + this.id + "_text");
+					if( label ) {
+						if( editor.readOnly ) {
+							label.addClass("cke_combo_inlinelabel");
+						} else {
+							label.removeClass("cke_combo_inlinelabel");
+						}
+						label.setText(value);
 					}
 				}
 			}
