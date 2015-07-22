@@ -1,6 +1,11 @@
 CKEditor 4 Changelog
 ====================
 
+## CKEditor 4.5.2 (patched)
+
+Fixed Issues:
+* [#13387](http://dev.ckeditor.com/ticket/13387): [Edge] Fixed: "Permission denied" error thrown while loading the editor with developer tools open.
+
 ## CKEditor 4.4.8
 
 **Security Updates:**
