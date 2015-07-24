@@ -5,6 +5,8 @@ CKEditor 4 Changelog
 
 Fixed Issues:
 * [#13387](http://dev.ckeditor.com/ticket/13387): [Edge] Fixed: "Permission denied" error thrown while loading the editor with developer tools open.
+* [#13554](http://dev.ckeditor.com/ticket/13554): [Edge] Fixed: Paste dialog's iframe does not receive focus on show.
+* [#13574](http://dev.ckeditor.com/ticket/13574): [Edge] Fixed: Permission denied thrown while opening editor dialogs.
 
 ## CKEditor 4.4.8
 
