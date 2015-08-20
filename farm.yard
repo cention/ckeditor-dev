@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <yard name="ckeditor">
 	<phase id="build">
-		<execute program="sh" arguments="dev/builder/build.sh" />
+		<execute program="bash" arguments="dev/builder/build.sh" />
 	</phase>
 	<phase id="install" depends="build">
 		<execute program="rm" arguments="-rf $(destination)/cention/share/ckeditor" />
