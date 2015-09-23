@@ -102,7 +102,7 @@
 		var found = false;
 		var imageType = /^image/;
 
-		var enabled = _(event.editor.name).getState('enable-file-upload');
+		var enabled = _(event.listenerData.editor.name).getState('enable-file-upload');
 		if (!enabled) {
 			return;
 		}
