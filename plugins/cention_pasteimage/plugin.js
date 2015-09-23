@@ -54,6 +54,11 @@
 	}
 
 	function onPaste(event) {
+		var enabled = _(event.editor.name).getState('enable-file-upload');
+		if (!enabled) {
+			return;
+		}
+
 		if (event.data.dataValue.indexOf('<img') == 0) {
 			event.stop();
 			handleBase64ImagePaste(event.data.dataValue, event.editor);
@@ -97,6 +102,11 @@
 		var found = false;
 		var imageType = /^image/;
 
+		var enabled = _(event.editor.name).getState('enable-file-upload');
+		if (!enabled) {
+			return;
+		}
+
 		if (!clipboardData) {
 			return;
 		}
@@ -128,9 +138,7 @@
 	function handleFile(file, editor) {
 		var fid = randomId();
 		var name = file.type.replace('/', '.');
-		var url = urlForApplicationCommand(
-			wfStringExpand('answer/upload/attachment/{0}/{1}', fid, encodeURIComponent(name))
-		);
+		var url = _(editor.name).action('file-upload-url', { id: fid, name: name });
 
 		var img = editor.document.createElement('img', {
 			attributes: {
@@ -146,14 +154,12 @@
 		};
 		reader.readAsDataURL(file);
 
-		_('AnswerAttachmentList').addUploadItemById(fid, name, true);
+		_(editor.name).action('before-upload-file', { id: fid, name: name });
 		sendFile(fid, name, file, function() {
 			img.setAttribute('src', url);
 			img.removeStyle('opacity');
 
-			_('AnswerAttachmentList').updateToSuccess(fid, url, file.size, function() {
-				img.remove();
-			});
+			_(editor.name).action('after-upload-file', { id: fid, name: name, size: file.size, element: img });
 		});
 	}
 
