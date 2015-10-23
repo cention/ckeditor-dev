@@ -137,27 +137,32 @@
 
 	function handleFile(file, editor) {
 		var fid = randomId();
-		var name = file.type.replace('/', '.');
+		var name = (file.name && file.name != 'blob' ? file.name : file.type.replace('/', '.'));
 		var url = _(editor.name).action('file-upload-url', { id: fid, name: name });
+		var img = null;
 
-		var img = editor.document.createElement('img', {
-			attributes: {
-				src: WFApplicationURI + 'Resources/Templates/Master.template/Images/ajax-loader-kit-blue.gif'
-			}
-		});
-		editor.insertElement(img);
+		if (file.type.match(/^image/)) {
+			img = editor.document.createElement('img', {
+				attributes: {
+					src: WFApplicationURI + 'Resources/Templates/Master.template/Images/ajax-loader-kit-blue.gif'
+				}
+			});
+			editor.insertElement(img);
 
-		var reader = new FileReader();
-		reader.onload = function(e) {
-			img.setStyle('opacity', '0.3');
-			img.setAttribute('src', e.target.result);
-		};
-		reader.readAsDataURL(file);
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				img.setStyle('opacity', '0.3');
+				img.setAttribute('src', e.target.result);
+			};
+			reader.readAsDataURL(file);
+		}
 
 		_(editor.name).action('before-upload-file', { id: fid, name: name });
 		sendFile(fid, name, file, function() {
-			img.setAttribute('src', url);
-			img.removeStyle('opacity');
+			if (img) {
+				img.setAttribute('src', url);
+				img.removeStyle('opacity');
+			}
 
 			_(editor.name).action('after-upload-file', { id: fid, name: name, size: file.size, element: img });
 		});
