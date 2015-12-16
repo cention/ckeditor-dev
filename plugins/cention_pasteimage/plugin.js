@@ -17,6 +17,9 @@
 				event.editor.on('paste', onPaste);
 			});
 		} else if (CKEDITOR.env.webkit) {
+			editor.on('instanceReady', function(event) {
+				event.editor.on('beforePaste', onBeforePasteWithClipboard);
+			});
 			editor.on('contentDom', function () {
 				var editableElement = editor.editable();
 				editableElement.on('paste', onPasteWithClipboard, null, { editor: editor });
@@ -97,9 +100,16 @@
 		return new Blob(byteArrays, { type: type });
 	}
 
+	var beforePasteRange = null;
+
+	function onBeforePasteWithClipboard(event) {
+		var editor = event.editor;
+		var selection = editor.getSelection()
+		beforePasteRange = selection.getRanges()[ 0 ];
+	}
+
 	function onPasteWithClipboard(event) {
 		var clipboardData = event.data.$.clipboardData;
-		var found = false;
 		var imageType = /^image/;
 
 		var enabled = _(event.listenerData.editor.name).getState('enable-file-upload');
@@ -111,19 +121,18 @@
 			return;
 		}
 
-		return Array.prototype.forEach.call(clipboardData.types, function (type, i) {
-			if (found) {
-				return;
-			}
+		for (var i = 0; i < clipboardData.types.length; i++) {
+			var type = clipboardData.types[i];
 
 			if (type.match(imageType) ||
 				(clipboardData.items && typeof jQuery.isArray(clipboardData.items) &&
 					clipboardData.items[i].type.match(imageType)))
 			{
 				handleImagePasteFromClipboard(clipboardData.items[i], event.listenerData.editor);
-				return found = true;
 			}
-		});
+		}
+
+		beforePasteRange = null;
 	}
 
 	function handleImagePasteFromClipboard(item, editor) {
@@ -147,7 +156,13 @@
 					src: WFApplicationURI + 'Resources/Templates/Master.template/Images/ajax-loader-kit-blue.gif'
 				}
 			});
-			editor.insertElement(img);
+
+			if (CKEDITOR.env.webkit && beforePasteRange) {
+				var editableElement = editor.editable();
+				editableElement.insertElementIntoRange(img, beforePasteRange);
+			} else {
+				editor.insertElement(img);
+			}
 
 			var reader = new FileReader();
 			reader.onload = function(e) {
