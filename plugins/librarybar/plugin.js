@@ -7,21 +7,19 @@
  * Created out of the CKEditor Plugin SDK:
  * http://docs.ckeditor.com/#!/guide/plugin_sdk_intro
  */
-CKEDITOR.plugins.add( 'librarybar', {
-	icons: 'librarybar',
-	init: function( editor ) {
-		editor.addCommand( 'insertLibrarybar', {
-			exec: function( editor ) {
-				var url = urlForApplicationAction( 'errands/popups/library/-/' + ActiveLibraryID );
-				mywin = window.open(url, 'preview', 'scrollbars=yes,menubar=no,toolbar=no,width=600,height=600'); 
-				mywin.focus();
-			}
-		});
-		editor.ui.addButton( 'Library', {
-			label: I('Open Library'),
-			command: 'insertLibrarybar',
-			toolbar: 'insert',
-			icon: this.path + "icons/librarybar.png"
-		});
-	}
+CKEDITOR.plugins.add("librarybar", {
+    icons: "librarybar",
+    init: function(editor) {
+        editor.addCommand("insertLibrarybar", {
+            exec: function() {
+                editor.fire('libraryClick');
+            }
+        });
+        editor.ui.addButton("Library", {
+            label: I("Open Library"),
+            command: "insertLibrarybar",
+            toolbar: "insert",
+            icon: this.path + "icons/librarybar.png"
+        });
+    }
 });
