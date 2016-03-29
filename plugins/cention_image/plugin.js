@@ -84,7 +84,7 @@ CKEDITOR.plugins.add("cention_image", {
 						} else {
 							output.push('\t\t\t\t\t\t<td align="center" style="width: 128px; height: 128px; border-radius: 5px 5px 5px 5px; border: 1px solid #A3D7FF;" onclick="CKEDITOR.tools.callFunction(', selectFunction, ', this);return false;">');
 						}
-						output.push('\t\t\t\t\t\t\t<img src="', image.src, '" style="max-width: 120px; max-height: 120px;">');
+						output.push('\t\t\t\t\t\t\t<img src="', image.download, '" style="max-width: 120px; max-height: 120px;">');
 						output.push("\t\t\t\t\t\t</td>");
 						output.push("\t\t\t\t\t</tr>");
 						output.push("\t\t\t\t</table>");
