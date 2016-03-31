@@ -1,26 +1,32 @@
-CKEDITOR.plugins.add("cention_dragimage", {
-	init: function(editor) {
+(function () {
+	'use strict';
+
+	CKEDITOR.plugins.add('cention_dragimage', {
+		init: init
+	});
+
+	function init(editor) {
 		if (editor.addFeature) {
 			editor.addFeature({
 				allowedContent: 'img[alt,id,!src]{width,height};'
 			});
 		}
-		/*Mujibur I kept it commented to see if any browser have any issues or not!
+
 		if (CKEDITOR.env.gecko || (CKEDITOR.env.ie && CKEDITOR.env.version >= 11)) {
 			editor.on('instanceReady', function(event) {
-				event.editor.on('paste', this.onPaste);
+				event.editor.on('paste', onPaste);
 			});
 		} else if (CKEDITOR.env.webkit) {
 			editor.on('instanceReady', function(event) {
-				event.editor.on('beforePaste', this.onBeforePasteWithClipboard);
+				event.editor.on('beforePaste', onBeforePasteWithClipboard);
 			});
 			editor.on('contentDom', function () {
 				var editableElement = editor.editable();
-				editableElement.on('paste', this.onPasteWithClipboard, null, { editor: editor });
+				editableElement.on('paste', onPasteWithClipboard, null, { editor: editor });
 			});
-		}*/
+		}
 
-		editor.on("contentDom", function() {
+		editor.on('contentDom', function () {
 			var editableElement = editor.editable();
 			var parent = editableElement.$.parentNode;
 			if (parent.addEventListener) {
@@ -38,37 +44,68 @@ CKEDITOR.plugins.add("cention_dragimage", {
 
 					if (event.dataTransfer && event.dataTransfer.files) {
 						Array.prototype.forEach.call(event.dataTransfer.files, function(file) {
-							editor.fire("drop", file);
+							handleFile(file, editor);
 						});
 					}
 				}, false);
 			}
-		})
-	},
-	onPaste: function(event) {
-		var enabled = _(event.editor.name).getState('enable-file-upload');
-		if (!enabled) {
-			return;
-		}
+		});
+	}
 
+	function randomId() {
+		return Math.floor(Math.random() * 6) + '' + i + '' + Math.floor('' + new Date() / 1000);
+	}
+
+	function onPaste(event) {
 		if (event.data.dataValue.indexOf('<img') == 0) {
 			event.stop();
 			handleBase64ImagePaste(event.data.dataValue, event.editor);
 		}
-	},
-	onBeforePasteWithClipboard: function(event) {
+	}
+
+	function handleBase64ImagePaste(value, editor) {
+		var fid = randomId();
+		var pos = value.indexOf(',') + 1;
+		var pre = value.slice(0, pos);
+		var type = pre.slice(pre.indexOf(':') + 1, pre.indexOf(';'));
+		var data = value.slice(pos, value.length);
+		var file = dataToFile(data.slice(0, data.indexOf('"')), type);
+
+		handleFile(file, editor)
+	}
+
+	function dataToFile(data, type) {
+		var byteCharacters = atob(data);
+		var byteArrays = [];
+		var sliceSize = 512;
+
+		for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+			var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+			var byteNumbers = new Array( slice.length );
+			for (var i = 0; i < slice.length; i++) {
+				byteNumbers[i] = slice.charCodeAt(i);
+			}
+
+			var byteArray = new Uint8Array(byteNumbers);
+
+			byteArrays.push(byteArray);
+		}
+
+		return new Blob(byteArrays, { type: type });
+	}
+
+	var beforePasteRange = null;
+
+	function onBeforePasteWithClipboard(event) {
 		var editor = event.editor;
 		var selection = editor.getSelection()
 		beforePasteRange = selection.getRanges()[ 0 ];
-	},
-	onPasteWithClipboard: function(event) {
+	}
+
+	function onPasteWithClipboard(event) {
 		var clipboardData = event.data.$.clipboardData;
 		var imageType = /^image/;
-
-		var enabled = _(event.listenerData.editor.name).getState('enable-file-upload');
-		if (!enabled) {
-			return;
-		}
 
 		if (!clipboardData) {
 			return;
@@ -87,4 +124,19 @@ CKEDITOR.plugins.add("cention_dragimage", {
 
 		beforePasteRange = null;
 	}
-});
+
+	function handleImagePasteFromClipboard(item, editor) {
+		if (!item || typeof item.getAsFile !== 'function') {
+			return;
+		}
+
+		var file = item.getAsFile();
+		handleFile(file, editor);
+	}
+
+	function handleFile(file, editor) {
+		var fid = randomId();
+		var name = (file.name && file.name != 'blob' ? file.name : file.type.replace('/', '.'));
+		editor.fire("drop", file);
+	}
+})();
