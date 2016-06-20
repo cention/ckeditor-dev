@@ -63,7 +63,6 @@ CKEDITOR.plugins.add("cention_image", {
 								editor.fire("saveSnapshot");
 							}
 						});
-
 					output.push('<div style="width: 450px; overflow-x: auto;">');
 					output.push('\t<table border="0" cellspacing="0" cellpadding="0">');
 					output.push("\t\t<tr>");
@@ -76,19 +75,21 @@ CKEDITOR.plugins.add("cention_image", {
 
 					for( var i = 0; i < editor.___fileArchiveImages.length; i++ ) {
 						var image = editor.___fileArchiveImages[i];
-						output.push('\t\t\t<td style="padding-left: 5px; padding-top: 5px; padding-bottom: 5px;">');
-						output.push('\t\t\t\t<table border="0" cellspacing="0" cellpadding="0" style="width: 128px; height: 128px;">');
-						output.push("\t\t\t\t\t<tr>");
-						if( i == 0 ) {
-							output.push('\t\t\t\t\t\t<td id="cention_image_first_item" align="center" style="width: 128px; height: 128px; border-radius: 5px 5px 5px 5px; border: 1px solid #A3D7FF;" onclick="CKEDITOR.tools.callFunction(', selectFunction, ', this);return false;">');
-						} else {
-							output.push('\t\t\t\t\t\t<td align="center" style="width: 128px; height: 128px; border-radius: 5px 5px 5px 5px; border: 1px solid #A3D7FF;" onclick="CKEDITOR.tools.callFunction(', selectFunction, ', this);return false;">');
+						if( image.value != "" && image.value.match(/\.(?:jpg|png|gif|jpeg|tiff)/gi) ){
+							output.push('\t\t\t<td style="padding-left: 5px; padding-top: 5px; padding-bottom: 5px;">');
+							output.push('\t\t\t\t<table border="0" cellspacing="0" cellpadding="0" style="width: 128px; height: 128px;">');
+							output.push("\t\t\t\t\t<tr>");
+							if( i == 0 ) {
+								output.push('\t\t\t\t\t\t<td id="cention_image_first_item" align="center" style="width: 128px; height: 128px; border-radius: 5px 5px 5px 5px; border: 1px solid #A3D7FF;" onclick="CKEDITOR.tools.callFunction(', selectFunction, ', this);return false;">');
+							} else {
+								output.push('\t\t\t\t\t\t<td align="center" style="width: 128px; height: 128px; border-radius: 5px 5px 5px 5px; border: 1px solid #A3D7FF;" onclick="CKEDITOR.tools.callFunction(', selectFunction, ', this);return false;">');
+							}
+							output.push('\t\t\t\t\t\t\t<img src="', image.download, '" style="max-width: 120px; max-height: 120px;">');
+							output.push("\t\t\t\t\t\t</td>");
+							output.push("\t\t\t\t\t</tr>");
+							output.push("\t\t\t\t</table>");
+							output.push("\t\t\t</td>")
 						}
-						output.push('\t\t\t\t\t\t\t<img src="', image.download, '" style="max-width: 120px; max-height: 120px;">');
-						output.push("\t\t\t\t\t\t</td>");
-						output.push("\t\t\t\t\t</tr>");
-						output.push("\t\t\t\t</table>");
-						output.push("\t\t\t</td>")
 					}
 
 					output.push("\t\t</tr>");
@@ -103,7 +104,7 @@ CKEDITOR.plugins.add("cention_image", {
 					output.push('\t\t\t\t\t<td style="border: 0px none; padding: 0px; background: none repeat scroll 0% 0% rgb(242, 242, 242); font-size: 10px; font-family: Verdana, Arial, Helvetica, sans-serif;">&nbsp;</td>');
 
 					if( editor.___fileArchiveImages.length != 0 ) {
-						output.push('\t\t\t\t\t<td style="border: 0px none; padding: 0px; background: none repeat scroll 0% 0% rgb(150, 215, 84); font-size: 10px; font-family: Verdana, Arial, Helvetica, sans-serif;"><img border="0" src="http://host5.cention.se/Cention.app/Resources/Images/submit_infoga.png" style="vertical-align: top;"></td>');
+						output.push('\t\t\t\t\t<td style="border: 0px none; padding: 0px; background: none repeat scroll 0% 0% rgb(150, 215, 84); font-size: 10px; font-family: Verdana, Arial, Helvetica, sans-serif;"><img border="0" src="/Cention.app/Resources/Images/submit_infoga.png" style="vertical-align: top;"></td>');
 						output.push('\t\t\t\t\t<td style="border: 0px none; padding: 0px; white-space: nowrap; background: none repeat scroll 0% 0% rgb(242, 242, 242); font-size: 12px; font-family: Verdana, Arial, Helvetica, sans-serif;">&nbsp;<span style="vertical-align: middle; color: rgb(113, 113, 113);">' + I('Insert') + '</span>&nbsp;&nbsp;</td>');
 					}
 
@@ -114,14 +115,13 @@ CKEDITOR.plugins.add("cention_image", {
 					output.push('\t\t\t<table border="0" cellspacing="0" cellpadding="0">');
 					output.push("\t\t\t\t<tr>");
 					output.push('\t\t\t\t\t<td style="border: 0px none; padding: 0px; background: none repeat scroll 0% 0% rgb(242, 242, 242); font-size: 10px; font-family: Verdana, Arial, Helvetica, sans-serif;">&nbsp;</td>');
-					output.push('\t\t\t\t\t<td style="border: 0px none; padding: 0px; background: none repeat scroll 0% 0% rgb(252, 171, 70); font-size: 10px; font-family: Verdana, Arial, Helvetica, sans-serif;"><img border="0" src="http://host5.cention.se/Cention.app/Resources/Images/submit_arrow_right.png" style="vertical-align: top;"></td>');
+					output.push('\t\t\t\t\t<td style="border: 0px none; padding: 0px; background: none repeat scroll 0% 0% rgb(252, 171, 70); font-size: 10px; font-family: Verdana, Arial, Helvetica, sans-serif;"><img border="0" src="/Cention.app/Resources/Images/submit_arrow_right.png" style="vertical-align: top;"></td>');
 					output.push('\t\t\t\t\t<td style="border: 0px none; padding: 0px; white-space: nowrap; background: none repeat scroll 0% 0% rgb(242, 242, 242); font-size: 12px; font-family: Verdana, Arial, Helvetica, sans-serif;">&nbsp;<span style="vertical-align: middle; color: rgb(113, 113, 113);">' + I('Cancel') + '</span>&nbsp;&nbsp;</td>');
 					output.push("\t\t\t\t</tr>");
 					output.push("\t\t\t</table>");
 					output.push("\t\t</td>");
 					output.push("\t</tr>");
 					output.push("</table>");
-
 					return output.join("");
 				}());
 
