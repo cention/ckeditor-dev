@@ -75,7 +75,7 @@ CKEDITOR.plugins.add("cention_image", {
 
 					for( var i = 0; i < editor.___fileArchiveImages.length; i++ ) {
 						var image = editor.___fileArchiveImages[i];
-						if( image.value != "" && image.value.match(/\.(?:jpg|png|gif|jpeg|tiff)/gi) ){
+						if( (image.value != null && image.value != "" && image.value.match(/\.(?:jpg|png|gif|jpeg|tiff)/gi)) || (image.name != null && image.name != "" && image.name.match(/\.(?:jpg|png|gif|jpeg|tiff)/gi))){
 							output.push('\t\t\t<td style="padding-left: 5px; padding-top: 5px; padding-bottom: 5px;">');
 							output.push('\t\t\t\t<table border="0" cellspacing="0" cellpadding="0" style="width: 128px; height: 128px;">');
 							output.push("\t\t\t\t\t<tr>");
@@ -84,7 +84,8 @@ CKEDITOR.plugins.add("cention_image", {
 							} else {
 								output.push('\t\t\t\t\t\t<td align="center" style="width: 128px; height: 128px; border-radius: 5px 5px 5px 5px; border: 1px solid #A3D7FF;" onclick="CKEDITOR.tools.callFunction(', selectFunction, ', this);return false;">');
 							}
-							output.push('\t\t\t\t\t\t\t<img src="', image.download, '" style="max-width: 120px; max-height: 120px;">');
+							var src = (image.download ? image.download : (image.src ? image.src : ""));
+							output.push('\t\t\t\t\t\t\t<img src="', src , '" style="max-width: 120px; max-height: 120px;">');
 							output.push("\t\t\t\t\t\t</td>");
 							output.push("\t\t\t\t\t</tr>");
 							output.push("\t\t\t\t</table>");
