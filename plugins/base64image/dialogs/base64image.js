@@ -117,6 +117,14 @@ CKEDITOR.dialog.add("base64imageDialog", function(editor){
 				}; })(n.files[0]);
 				fr.onerror = function(){ imgPreview.getElement().setHtml(""); };
 				fr.onabort = function(){ imgPreview.getElement().setHtml(""); };
+				if(typeof CKEDITOR.config.imageMaxSize !== 'undefined' &&
+					CKEDITOR.config.imageMaxSize > 0 &&
+					CKEDITOR.config.imageMaxSize < n.files[0].size){
+					imgPreview.getElement().setHtml("Image size " + 
+						n.files[0].size + " bytes exceeded configured maximum "
+						+ "size "+ CKEDITOR.config.imageMaxSize + " bytes");
+					return
+				}
 				fr.readAsDataURL(n.files[0]);
 			}
 		}
