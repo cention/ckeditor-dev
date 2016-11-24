@@ -16,7 +16,7 @@ CKEDITOR.plugins.add("librarybar", {
             }
         });
         editor.ui.addButton("Library", {
-            label: I("Open Library"),
+            label: I("Open Knowledge base"),
             command: "insertLibrarybar",
             toolbar: "insert",
             icon: this.path + "icons/librarybar.png"
