@@ -53,11 +53,13 @@
 	}
 
 	function randomId() {
+		var i=1;
 		return Math.floor(Math.random() * 6) + '' + i + '' + Math.floor('' + new Date() / 1000);
 	}
 
 	function onPaste(event) {
-		if (event.data.dataValue.indexOf('<img') == 0) {
+		if( (event.data.dataValue.indexOf('<img') == 0) &&
+			(event.data.dataValue.indexOf(" src=\"http") == -1)){
 			event.stop();
 			handleBase64ImagePaste(event.data.dataValue, event.editor);
 		}
