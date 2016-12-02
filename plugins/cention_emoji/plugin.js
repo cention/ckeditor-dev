@@ -3,7 +3,61 @@ CKEDITOR.plugins.add('cention_emoji', {
 	lang: 'en,en-au,en-ca,en-gb,fi,fr,fr-ca,ms,nb,no,sv,zh,zh-cn',
 	icons: 'cention_emoji',
 	hidpi: true,
+	autoConvert: true,
 	init: function(editor) {
+		var emojified = {
+			smile: '🙂',
+			open_mouth: '😮',
+			scream: '😱',
+			smirk: '😏',
+			grinning: '😀',
+			stuck_out_tongue_closed_eyes: '😝',
+			stuck_out_tongue_winking_eye: '😜',
+			rage: '😡',
+			frowning: '😦',
+			sob: '😭',
+			kissing_heart: '😘',
+			wink: '😉',
+			pensive: '😔',
+			confounded: '😖',
+			flushed: '😳',
+			relaxed: '☺',
+			mask: '😷',
+			heart: '❤',
+			broken_heart: '💔'
+		};
+		var contentChanged = false;
+		var self = this;
+		var timer = setInterval(function() {
+			if(contentChanged) {
+				if(!self.autoConvert) {
+					return;
+				}
+				if(window.emojify) {
+					window.emojify.run(editor.document.$.body,
+						function(emoji, name) {
+						if(emojified[name]) {
+							var span = document.createElement('span');
+							span.innerHTML = emojified[name];
+							return span;
+						}
+					});
+					contentChanged = false;
+				}
+			}
+		}, 888);
+		// load the emojify library
+		// callback complete must be there to un-busy the cursor busy pointer.
+		// Seem like ckeditor bug.
+		CKEDITOR.scriptLoader.load(this.path+'emojify/emojify.js',
+			function(ok) {}, null, true);
+		editor.on('change', function(e) {
+			contentChanged = true;
+		});
+		editor.on('destroy', function(e) {
+			//console.debug("ckeditor is being DESTROYED");
+			clearInterval(timer);
+		});
 		editor.addCommand('cention_emoji', new CKEDITOR.dialogCommand('cention_emoji', {
 			allowedContent: 'img[alt,height,!src,title,width]',
 			requiredContent: 'img'

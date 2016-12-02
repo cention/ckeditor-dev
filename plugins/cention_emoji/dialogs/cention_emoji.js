@@ -145,6 +145,10 @@ CKEDITOR.dialog.add('cention_emoji', function(editor) {
 		}
 	});
 
+	var onAutoClick = CKEDITOR.tools.addFunction(function(ev) {
+		editor.plugins.cention_emoji.autoConvert = ev.target.checked;
+	});
+
 	var focusedNode;
 	var currentTab;
 
@@ -225,7 +229,8 @@ CKEDITOR.dialog.add('cention_emoji', function(editor) {
 						charDesc = desc[i];
 					}
 
-					var charLabelId = 'cke_cention_emoji_label_' + i + '_' + CKEDITOR.tools.getNextNumber();
+					var charLabelId = 'cke_cention_emoji_label_' + i + '_' +
+						CKEDITOR.tools.getNextNumber();
 
 					html.push('<td class="cke_dark_background" style="cursor: default;text-align: center" role="presentation">' +
 						'<a href="javascript: void(0);" role="option"' +
@@ -250,8 +255,23 @@ CKEDITOR.dialog.add('cention_emoji', function(editor) {
 			}
 			html.push('</tr>');
 		}
-		html.push('</table>', '<span id="' + charsTableLabel + '" class="cke_voice_label">' + lang.options + '</span>');
-		dialog.getContentElement(tab, 'charContainer').getElement().setHtml(html.join(''));
+		html.push('</table>', '<span id="' + charsTableLabel +
+			'" class="cke_voice_label">' + lang.options + '</span>');
+		dialog.getContentElement(tab,
+			'charContainer').getElement().setHtml(html.join(''));
+
+		var autoOptHTML = '';
+		if(tab == 'peopleTab') {
+			var checked = '';
+			if(editor.plugins.cention_emoji.autoConvert) {
+				checked = 'checked ';
+			}
+			autoOptHTML = '<input type="checkbox" onclick="CKEDITOR.tools.callFunction(' +
+				onAutoClick + ', event, this)" ' + checked + '/> Auto convert';
+		} else {
+			autoOptHTML = '';
+		}
+		dialog.getContentElement(tab, 'autoConvertOpt').getElement().setHtml(autoOptHTML);
 	}
 
 	var emojiSelect = {
@@ -326,6 +346,11 @@ CKEDITOR.dialog.add('cention_emoji', function(editor) {
 						width:70px;padding-top:2px;font-family:\'Microsoft Sans Serif\', \
 						Arial,Helvetica,Verdana;text-align:center;',
 					html: '<div>&nbsp;</div>'
+				},
+				{
+					type: 'html',
+					id: 'autoConvertOpt',
+					html: '<div></div>'
 				}]
 			}]
 		}]
