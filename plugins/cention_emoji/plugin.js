@@ -41,11 +41,34 @@ CKEDITOR.plugins.add('cention_emoji', {
 							span.innerHTML = emojified[name];
 							return span;
 						}
+					}, function(node, offset, len) {
+						var select = editor.getSelection();
+						var pos = select.getRanges()[0].startOffset;
+						var dom = select.getCommonAncestor();
+						if(node == dom.$) {
+							if(pos < offset) {
+								//console.debug("cursor BEFORE emoji!");
+							} else if(pos >= offset+len) {
+								return pos - (offset+len);
+							} else {
+								//console.debug("cursor inside the emoji!");
+							}
+						} else {
+							//console.debug("cursor not within same dom");
+						}
+					}, function(newdom, arg) {
+						if(typeof arg !== 'undefined') {
+							var node = new CKEDITOR.dom.node(newdom);
+							var range = new CKEDITOR.dom.range(node);
+							range.setStart(node, arg);
+							range.setEnd(node, arg);
+							range.select();
+						}
 					});
 					contentChanged = false;
 				}
 			}
-		}, 888);
+		}, 1500);
 		// load the emojify library
 		// callback complete must be there to un-busy the cursor busy pointer.
 		// Seem like ckeditor bug.
