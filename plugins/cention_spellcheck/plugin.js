@@ -6,6 +6,7 @@ CKEDITOR.plugins.add("cention_spellcheck", {
 			path: "",
 			driver: "aspell"
 		},
+		suggestBoxScrollBar: {},
 		suggestBox: {
 			position: "below",
 			appendTo: "body"
@@ -26,6 +27,7 @@ CKEDITOR.plugins.add("cention_spellcheck", {
 				plugin.toggle(editor);
 			}
 		});
+		this.config.suggestBoxScrollBar = editor.config.suggestBoxScrollBar;
 
 		editor.ui.addRichCombo("SpellCheckerLanguage", {
 			label: I("Language"),
@@ -170,10 +172,24 @@ CKEDITOR.plugins.add("cention_spellcheck", {
 				d = h.left + g.left,
 				a = h.top + g.top + (c.top - g.top) + a.offsetHeight,
 				a = a - jQuery(plugin.editorWindow).scrollTop();
-			this.container.css({
-				top: a,
-				left: d
-			})
+			if((typeof this.config.suggestBoxScrollBar.overflowY !== 
+					"undefined") &&
+				(typeof this.config.suggestBoxScrollBar.maxHeight !==
+					"undefined") &&
+				(this.config.suggestBoxScrollBar.overflowY == true)){
+				this.container.css({
+					'overflow-y': "scroll",
+					'overflow-x': "auto",
+					'max-height': this.config.suggestBoxScrollBar.maxHeight,
+					top: a,
+					left: d
+				})
+			} else{
+				this.container.css({
+					top: a,
+					left: d
+				})
+			}
 		}
 	}
 });
