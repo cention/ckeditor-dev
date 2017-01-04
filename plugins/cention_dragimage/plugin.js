@@ -133,7 +133,7 @@
 		}
 
 		var file = item.getAsFile();
-		handleFile(file, editor);
+		handleFilePaste(file, editor);
 	}
 
 	function handleFile(file, editor) {
@@ -141,4 +141,35 @@
 		var name = (file.name && file.name != 'blob' ? file.name : file.type.replace('/', '.'));
 		editor.fire("drop", file);
 	}
+
+	function fileUploadUrl(id, name) {
+		var webserverRoot = window.location.protocol + "//" +window.location.hostname + "/workflow/";
+		return webserverRoot+"-/answer/upload/attachment/"+id+"/image";
+	}
+
+	function handleFilePaste(file, editor) {
+		var fid = randomId();
+		var name = (file.name && file.name != 'blob' ? file.name : file.type.replace('/', '.'));
+		editor.fire("drop", file);
+
+		var url = fileUploadUrl(fid, name);
+		var img = null;
+
+		if (file.type.match(/^image/)) {
+			img = editor.document.createElement('img', {
+				attributes: {
+					//src: WFApplicationURI + 'Resources/Templates/Master.template/Images/ajax-loader-kit-blue.gif'
+				}
+			});
+
+			if (CKEDITOR.env.webkit && beforePasteRange) {
+				var editableElement = editor.editable();
+				editableElement.insertElementIntoRange(img, beforePasteRange);
+			} else {
+				editor.insertElement(img);
+			}
+
+		}
+	}
+
 })();
