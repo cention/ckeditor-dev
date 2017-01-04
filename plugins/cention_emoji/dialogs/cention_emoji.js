@@ -141,12 +141,13 @@ CKEDITOR.dialog.add('cention_emoji', function(editor) {
 				break;
 			default:
 				// Do not stop not handled events.
+				ev.preventDefault(true);
 				return;
 		}
 	});
 
 	var onAutoClick = CKEDITOR.tools.addFunction(function(ev) {
-		editor.plugins.cention_emoji.autoConvert = ev.target.checked;
+		editor.plugins.cention_emoji.autoConvert[editor.id] = ev.target.checked;
 	});
 
 	var focusedNode;

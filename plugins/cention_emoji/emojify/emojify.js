@@ -125,21 +125,18 @@
 				}
 				emojiElement.setAttribute('title', ':' + args.emojiName + ':');
 			}
-			var beforeReturn;
-			if(args.before) {
-				beforeReturn = args.before(args.node, args.match.index,
-					args.match[0].length);
-			}
-			args.node.splitText(args.match.index);
-			args.node.nextSibling.nodeValue = args.node.nextSibling.nodeValue.substr(
-				args.match[0].length,
-				args.node.nextSibling.nodeValue.length
-			);
-			// this line seem useless
-			//emojiElement.appendChild(args.node.splitText(args.match.index));
-			args.node.parentNode.insertBefore(emojiElement, args.node.nextSibling);
-			if(args.after) {
-				args.after(emojiElement.nextSibling, beforeReturn);
+			if(args.ckeReplacer) {
+				args.ckeReplacer(args.node, args.match.index,
+					args.match[0].length, emojiElement);
+			} else {
+				args.node.splitText(args.match.index);
+				args.node.nextSibling.nodeValue = args.node.nextSibling.nodeValue.substr(
+					args.match[0].length,
+					args.node.nextSibling.nodeValue.length
+				);
+				// this line seem useless
+				//emojiElement.appendChild(args.node.splitText(args.match.index));
+				args.node.parentNode.insertBefore(emojiElement, args.node.nextSibling);
 			}
 		}
 
@@ -245,7 +242,7 @@
 			return false;
 		}
 
-		function run(el, replacer, before, after) {
+		function run(el, replacer, cke) {
 			// Check if an element was not passed.
 			// This will only work in the browser
 			if(typeof el === 'undefined') {
@@ -294,8 +291,7 @@
 						match: matches[i],
 						emojiName: emojiName,
 						replacer: replacer,
-						before: before,
-						after: after,
+						ckeReplacer: cke,
 						win: win
 					});
 				}

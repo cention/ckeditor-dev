@@ -3,7 +3,7 @@ CKEDITOR.plugins.add('cention_emoji', {
 	lang: 'en,en-au,en-ca,en-gb,fi,fr,fr-ca,ms,nb,no,sv,zh,zh-cn',
 	icons: 'cention_emoji',
 	hidpi: true,
-	autoConvert: true,
+	autoConvert: {},
 	init: function(editor) {
 		var emojified = {
 			smile: '🙂',
@@ -28,47 +28,73 @@ CKEDITOR.plugins.add('cention_emoji', {
 		};
 		var contentChanged = false;
 		var self = this;
+		// allow auto conversion feature to be unique among editor.instance.
+		this.autoConvert[editor.id] = true;
 		var timer = setInterval(function() {
 			if(contentChanged) {
-				if(!self.autoConvert) {
+				if(!self.autoConvert[editor.id] ||
+					!editor.editable().hasFocus || editor.readOnly) {
+					// only focus-ed editor will execute replacement as there
+					// is a bug where range selection can not be properly
+					// calculate for Ckeditor.inline when plugin menu popup
+					// appear and take over the focus.
 					return;
 				}
 				if(window.emojify) {
-					window.emojify.run(editor.document.$.body,
-						function(emoji, name) {
+					var hasReplace = false;
+					var dom;
+					if(editor.editable().isInline()) {
+						dom = editor.container.$;
+					} else {
+						dom = editor.document.$.body;
+					}
+					window.emojify.run(dom, function(emoji, name) {
 						if(emojified[name]) {
+							hasReplace = true;
 							var span = document.createElement('span');
 							span.innerHTML = emojified[name];
 							return span;
 						}
-					}, function(node, offset, len) {
+					}, function(node, offset, len, el) { // insert
+						// cursor position detection
 						var select = editor.getSelection();
 						var pos = select.getRanges()[0].startOffset;
 						var dom = select.getCommonAncestor();
+						var offsetFrmRplcedEmji = null;
 						if(node == dom.$) {
 							if(pos < offset) {
 								//console.debug("cursor BEFORE emoji!");
 							} else if(pos >= offset+len) {
-								return pos - (offset+len);
+								offsetFrmRplcedEmji = pos - (offset+len);
 							} else {
 								//console.debug("cursor inside the emoji!");
 							}
 						} else {
 							//console.debug("cursor not within same dom");
 						}
-					}, function(newdom, arg) {
-						if(typeof arg !== 'undefined') {
-							var node = new CKEDITOR.dom.node(newdom);
-							var range = new CKEDITOR.dom.range(node);
-							range.setStart(node, arg);
-							range.setEnd(node, arg);
+						// Ckeditor emoji replacement
+						var ckEl = new CKEDITOR.dom.element(el);
+						var ckNode = new CKEDITOR.dom.text(node);
+						var nextNode = ckNode.split(offset);
+						var nextNodeTxt = nextNode.getText();
+						nextNode.setText(nextNodeTxt.substring(len,
+							nextNodeTxt.length));
+						nextNode.insertBeforeMe(ckEl);
+						// renew cursor to new position after replaced emoji
+						if(offsetFrmRplcedEmji !== null) {
+							var range = editor.createRange();
+							range.setStart(nextNode, offsetFrmRplcedEmji);
+							range.setEnd(nextNode, offsetFrmRplcedEmji);
 							range.select();
 						}
 					});
+					if(hasReplace) {
+						editor.fire('change');
+					}
 					contentChanged = false;
 				}
 			}
-		}, 1500);
+		}, 1688);
 		// load the emojify library
 		// callback complete must be there to un-busy the cursor busy pointer.
 		// Seem like ckeditor bug.
