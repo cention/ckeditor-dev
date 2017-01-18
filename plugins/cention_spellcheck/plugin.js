@@ -172,7 +172,8 @@ CKEDITOR.plugins.add("cention_spellcheck", {
 				d = h.left + g.left,
 				a = h.top + g.top + (c.top - g.top) + a.offsetHeight,
 				a = a - jQuery(plugin.editorWindow).scrollTop();
-			if((typeof this.config.suggestBoxScrollBar.overflowY !== 
+			if((typeof this.config.suggestBoxScrollBar !== "undefined") &&
+				(typeof this.config.suggestBoxScrollBar.overflowY !== 
 					"undefined") &&
 				(typeof this.config.suggestBoxScrollBar.maxHeight !==
 					"undefined") &&
