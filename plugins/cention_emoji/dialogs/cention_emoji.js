@@ -406,6 +406,7 @@ CKEDITOR.dialog.add('cention_emoji', function(editor) {
 		onLoad: function(evt) {
 			currentTab = 'peopleTab';
 			dialog = evt.sender;
+			dialog.getElement().unselectable();
 			dialog.on('selectPage', function(e) {
 				currentTab = e.data.page;
 				setTimeout(function() {
