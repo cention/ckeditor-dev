@@ -1306,6 +1306,8 @@
 			}
 
 			// Check range spans in non-editable.
+			if( range == null )
+				return;
 			if ( range.checkReadOnly() )
 				return;
 
