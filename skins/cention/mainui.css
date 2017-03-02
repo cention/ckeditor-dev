@@ -119,6 +119,15 @@ Special outer level classes used in this file:
     border-bottom:1px solid #CECECE;
 }
 
+/* create border for inline instance of Ckeditor and re-adjust padding to make
+   it looks square */
+.cke_chrome.cke_float .cke_inner .cke_top
+{
+	padding: 5px 2px 0 5px;
+	border-left:1px solid #CECECE;
+	border-right:1px solid #CECECE;
+}
+
 /* On iOS we need to manually enable scrolling in the contents block. (#9945) */
 .cke_browser_ios .cke_contents
 {
