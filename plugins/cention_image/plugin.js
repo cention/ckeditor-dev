@@ -57,9 +57,25 @@ CKEDITOR.plugins.add("cention_image", {
 							}
 							if( selectedImg ) {
 								editor.fire("saveSnapshot");
+
 								var img = editor.document.createElement("img");
 								img.setAttribute("src", selectedImg.getAttribute("src"));
-								editor.insertElement(img);
+
+								if(editor.wrapImageInContainer){
+									var imgContainer = editor.document.createElement("div");
+									imgContainer.setAttribute("class", "imgPreviewContainer");
+									var imgPreviewLink = editor.document.createElement("a");
+									imgPreviewLink.setAttribute("class", "imgPreviewLink");
+									imgPreviewLink.setAttribute("data-lightbox", "imgPreviewLink");
+									imgPreviewLink.setAttribute("href", selectedImg.getAttribute("src"));
+									imgPreviewLink.$.appendChild(img.$);
+									imgContainer.$.appendChild(imgPreviewLink.$);
+									editor.insertElement(imgContainer);
+								} else {
+									editor.insertElement(img);
+								}
+
+
 								editor.fire("saveSnapshot");
 							}
 						});
