@@ -85,9 +85,9 @@ function removePlaceholder(ev) {
 
 		root.removeClass( 'placeholder' );
 		// fill it properly
-		if (CKEDITOR.dtd[ root.getName() ]['p'])
+		if (CKEDITOR.dtd[ root.getName() ]['div'])
 		{
-			root.setHtml( '<p><br/></p>' );
+			root.setHtml( '<div><br/></div>' );
 			// Set caret in position
 			var range = new CKEDITOR.dom.range(editor.document);
 			range.moveToElementEditablePosition(root.getFirst(), true);
