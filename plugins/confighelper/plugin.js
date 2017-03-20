@@ -37,6 +37,11 @@ function addPlaceholder(ev) {
 	if (!root)
 		return;
 
+	if (ev.name=='contentDom' && editor.focusManager.hasFocus) {
+		// dont add placeholder when has focus
+		return;
+	}
+
 	if (editor.mode == 'wysiwyg')
 	{
 		// If the blur is due to a dialog, don't apply the placeholder
