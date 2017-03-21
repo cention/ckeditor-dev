@@ -27,11 +27,12 @@ CKEDITOR.plugins.add('cention_emoji', {
 			broken_heart: '💔'
 		};
 		var contentChanged = false;
+		var isSettingData = false;
 		var self = this;
 		// allow auto conversion feature to be unique among editor.instance.
 		this.autoConvert[editor.id] = true;
 		var timer = setInterval(function() {
-			if(contentChanged) {
+			if(contentChanged && !isSettingData) {
 				if(!self.autoConvert[editor.id] ||
 					!editor.editable().hasFocus || editor.readOnly) {
 					// only focus-ed editor will execute replacement as there
@@ -107,6 +108,16 @@ CKEDITOR.plugins.add('cention_emoji', {
 			//console.debug("ckeditor is being DESTROYED");
 			clearInterval(timer);
 		});
+		if(CKEDITOR.env.ie) {
+			editor.on('setData', function(e) {
+				//console.debug("cention_emoji: setData Start");
+				isSettingData = true;
+			});
+			editor.on('dataReady', function(e) {
+				//console.debug("cention_emoji: data Ready");
+				isSettingData = false;
+			});
+		}
 		editor.addCommand('cention_emoji', new CKEDITOR.dialogCommand('cention_emoji', {
 			allowedContent: 'img[alt,height,!src,title,width]',
 			requiredContent: 'img'
