@@ -8,12 +8,14 @@
 
 // Check if the browser supports the placeholder attribute on textareas natively.
 var supportsPlaceholder = ('placeholder' in document.createElement( 'textarea' ) );
+var isSettingData = false;
+var isFocusing = false;
 
 // If the data is "empty" (BR, P) or the placeholder then return an empty string.
 // Otherwise return the original data
 function dataIsEmpty( data )
 {
-	if ( !data)
+	if ( !data )
 		return true;
 
 	if ( data.length > 20 )
@@ -31,13 +33,22 @@ function dataIsEmpty( data )
 }
 
 function addPlaceholder(ev) {
+	if (ev.name == 'blur') {
+		isFocusing = false;
+	}
+	if (CKEDITOR.env.ie && isSettingData) {
+		return;
+	}
 	var editor = ev.editor;
+	if(editor.readOnly) {
+		return;
+	}
 	var root = (editor.editable ? editor.editable() : (editor.mode == 'wysiwyg' ? editor.document && editor.document.getBody() : editor.textarea  ) );
 	var placeholder = ev.listenerData;
 	if (!root)
 		return;
 
-	if (ev.name=='contentDom' && editor.focusManager.hasFocus) {
+	if ((ev.name == 'contentDom') && isFocusing) {
 		// dont add placeholder when has focus
 		return;
 	}
@@ -78,6 +89,9 @@ function addPlaceholder(ev) {
 }
 
 function removePlaceholder(ev) {
+	if (ev.name == 'focus') {
+		isFocusing = true;
+	}
 	var editor = ev.editor;
 	var root = (editor.editable ? editor.editable() : (editor.mode == 'wysiwyg' ? editor.document && editor.document.getBody() : editor.textarea  ) );
 	if (!root)
@@ -196,12 +210,22 @@ CKEDITOR.plugins.add( 'confighelper',
 					if ( root.hasClass( 'placeholder' ) )
 						root.removeClass( 'placeholder' );
 				}
-				else
-				{
-					// if data is empty, set it to the placeholder
-					addPlaceholder(ev);
+				if (CKEDITOR.env.ie) {
+					isSettingData = true;
 				}
 			});
+
+			if (CKEDITOR.env.ie) {
+				editor.on('dataReady', function(e) {
+					isSettingData = false;
+					if (isFocusing) {
+						removePlaceholder(e);
+					} else {
+						e.listenerData = placeholder;
+						addPlaceholder(e);
+					}
+				});
+			}
 
 			editor.on('blur', addPlaceholder, null, placeholder);
 			editor.on('mode', addPlaceholder, null, placeholder);
