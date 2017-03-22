@@ -7,7 +7,7 @@ CKEDITOR.dialog.add("base64imageDialog", function(editor){
 	var t = null,
 		selectedImg = null,
 		orgWidth = null, orgHeight = null,
-		imgPreview = null, urlCB = null, urlI = null, fileCB = null, imgScal = 1, lock = true;
+		imgPreview = null, urlCB = null, urlI = null, fileCB = null, imgScal = 1, lock = true, currentFile = null;
 	
 	/* Check File Reader Support */
 	function fileSupport() {
@@ -114,6 +114,7 @@ CKEDITOR.dialog.add("base64imageDialog", function(editor){
 				fr.onload = (function(f) { return function(e) {
 					imgPreview.getElement().setHtml("");
 					imagePreviewLoad(e.target.result);
+					currentFile = n.files[0];
 				}; })(n.files[0]);
 				fr.onerror = function(){ imgPreview.getElement().setHtml(""); };
 				fr.onabort = function(){ imgPreview.getElement().setHtml(""); };
@@ -352,7 +353,8 @@ CKEDITOR.dialog.add("base64imageDialog", function(editor){
 			
 		},
 		onOk : function(){
-			
+			editor.fire("drop", currentFile);
+			return;
 			/* Get image source */
 			var src = "";
 			try { src = CKEDITOR.document.getById(editor.id+"previewimage").$.src; } catch(e) { src = ""; }
