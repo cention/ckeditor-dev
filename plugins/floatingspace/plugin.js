@@ -1,14 +1,21 @@
-﻿/**
+/**
  * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
 ( function() {
 	var win = CKEDITOR.document.getWindow(),
-		pixelate = CKEDITOR.tools.cssLength;
+		pixelate = CKEDITOR.tools.cssLength,
+		cmdName = 'updatefloatingspace';
 
 	CKEDITOR.plugins.add( 'floatingspace', {
 		init: function( editor ) {
+			if( editor.config.enCmdUpdate ) {
+				editor.addCommand( cmdName, new CKEDITOR.command( editor, {
+					exec: function() { /* dummy cmd to trigger event */ },
+					editorFocus: false
+				} ) );
+			}
 			// Add listener with lower priority than that in themedui creator.
 			// Thereby floatingspace will be created only if themedui wasn't used.
 			editor.on( 'loaded', function() {
@@ -299,9 +306,18 @@
 					evt.preventDefault();
 			} );
 
+			var cmdevt = function(evt) {
+				if( evt.data.name === cmdName ) {
+					changeBuffer.input();
+				}
+			};
+
 			editor.on( 'focus', function( evt ) {
 				layout( evt );
 				editor.on( 'change', changeBuffer.input );
+				if( config.enCmdUpdate ) {
+					editor.on( 'afterCommandExec', cmdevt );
+				}
 				win.on( 'scroll', uiBuffer.input );
 				win.on( 'resize', uiBuffer.input );
 			} );
@@ -309,6 +325,9 @@
 			editor.on( 'blur', function() {
 				floatSpace.hide();
 				editor.removeListener( 'change', changeBuffer.input );
+				if( config.enCmdUpdate ) {
+					editor.removeListener( 'afterCommandExec', cmdevt );
+				}
 				win.removeListener( 'scroll', uiBuffer.input );
 				win.removeListener( 'resize', uiBuffer.input );
 			} );
