@@ -106,7 +106,11 @@ function removePlaceholder(ev) {
 		// fill it properly
 		if (CKEDITOR.dtd[ root.getName() ]['div'])
 		{
-			root.setHtml( '<div><br/></div>' );
+			if(typeof editor.config.noDefaultLineBreak !== "undefined" && editor.config.noDefaultLineBreak) {
+				root.setHtml(' ');
+			}else {
+				root.setHtml( '<div><br/></div>' );
+			}
 			// Set caret in position
 			var range = new CKEDITOR.dom.range(editor.document);
 			range.moveToElementEditablePosition(root.getFirst(), true);
