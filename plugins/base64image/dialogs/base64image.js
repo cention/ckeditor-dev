@@ -353,6 +353,10 @@ CKEDITOR.dialog.add("base64imageDialog", function(editor){
 			
 		},
 		onOk : function(){
+			var src = "";
+			try { src = CKEDITOR.document.getById(editor.id+"previewimage").$.src; } catch(e) { src = ""; }
+			if(typeof(src) != "string" || src == null || src === "") return;
+
 			if(urlCB.getValue()){
 				var imgContainer = editor.document.createElement("div");
 				imgContainer.setAttribute("class", "imgPreviewContainer");
