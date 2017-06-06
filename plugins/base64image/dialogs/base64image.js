@@ -353,7 +353,26 @@ CKEDITOR.dialog.add("base64imageDialog", function(editor){
 			
 		},
 		onOk : function(){
-			editor.fire("drop", currentFile);
+			if(urlCB.getValue()){
+				var imgContainer = editor.document.createElement("div");
+				imgContainer.setAttribute("class", "imgPreviewContainer");
+				var imgHref = editor.document.createElement("a");
+				imgHref.setAttribute("class", "imgPreviewLink");
+				imgHref.setAttribute("id", "imgPreviewLink-id");
+				imgHref.setAttribute("data-lightbox", "imgPreviewLink-id");
+				imgHref.setAttribute("href", urlI.getValue());
+				var newImg = editor.document.createElement("img");
+				newImg.setAttribute("src", urlI.getValue());
+				newImg.setAttribute("id", "id");
+				newImg.setAttribute("style", "max-width:200px;max-height:200px;");
+
+				imgHref.$.appendChild(newImg.$);
+				imgContainer.$.appendChild(imgHref.$);
+
+				editor.insertElement(imgContainer);
+			} else {
+				editor.fire("drop", currentFile);
+			}
 			return;
 			/* Get image source */
 			var src = "";
