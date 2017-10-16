@@ -157,6 +157,7 @@ CKEDITOR.plugins.add("cention_spellcheck", {
 			plugin.destroy();
 		});
 		plugin.spellchecker.on("replace.word", function() {
+			plugin.editor.fire("change");
 			if( plugin.spellchecker.parser.incorrectWords.length === 0 ) 
 				plugin.destroy();
 		});
