@@ -134,7 +134,8 @@ CKEDITOR.plugins.add("cention_spellcheck", {
 			jQuery('.cke_button__spellchecker_label').text(I('Perform spell check'));
 			jQuery('.cke_button__spellchecker_icon_select').removeClass('cke_button__spellchecker_icon_select');
 			jQuery('.cke_button__spellchecker_icon_select').addClass('cke_button__spellchecker_icon');
-			jQuery(this.editorWindow).off(".spellchecker")
+			jQuery(this.editorWindow).off(".spellchecker");
+			this.editor.fire("change");
 		}
 	},
 	toggle: function( editor ) {
