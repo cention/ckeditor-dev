@@ -68,6 +68,7 @@ CKEDITOR.plugins.add("cention_image", {
 									imgPreviewLink.setAttribute("class", "imgPreviewLink");
 									imgPreviewLink.setAttribute("data-lightbox", "imgPreviewLink");
 									imgPreviewLink.setAttribute("href", selectedImg.getAttribute("src"));
+									imgPreviewLink.setAttribute("style","max-width:200px;max-height:200px");
 									imgPreviewLink.$.appendChild(img.$);
 									imgContainer.$.appendChild(imgPreviewLink.$);
 									editor.insertElement(imgContainer);
