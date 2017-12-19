@@ -43,6 +43,7 @@ http://docs.cksource.com/CKEditor_4.x/Skin_SDK/Reset
 	-moz-transition: none;
 	-ms-transition: none;
 	transition: none;
+	position: relative;
 }
 
 /* Reset for elements and their children. */

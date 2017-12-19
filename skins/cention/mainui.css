@@ -107,7 +107,12 @@ Special outer level classes used in this file:
 	/* Ideally this should be "auto", but it shows scrollbars in IE7. */
 	overflow: hidden;
 }
-
+.cke_bottom{
+	position: absolute;
+	bottom: 0;
+	left: 97%; /* this control ckeditor resizing handle  */
+	right: 0;
+}
 /* Allow breaking toolbars when in a narrow editor. (#9947) */
 .cke_top
 {
@@ -145,7 +150,8 @@ Special outer level classes used in this file:
 	height: 0;
 	overflow: hidden;
 	border-width: 12px 12px 0 12px;
-	border-color: transparent #EFEFEF transparent transparent;
+	/* border-color: transparent #EFEFEF transparent transparent; */
+	border-color: transparent #ddd transparent transparent;
 	border-style: dashed solid dashed dashed;	/* dashed is for HC mode */
 	margin: 10px 0 0;
 	font-size: 0;
