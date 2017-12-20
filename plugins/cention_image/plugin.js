@@ -60,6 +60,7 @@ CKEDITOR.plugins.add("cention_image", {
 
 								var img = editor.document.createElement("img");
 								img.setAttribute("src", selectedImg.getAttribute("src"));
+								img.setAttribute("style","max-width:200px;max-height:200px");
 
 								if(editor.wrapImageInContainer){
 									var imgContainer = editor.document.createElement("div");
