@@ -62,10 +62,12 @@
 				} ) ) );
 
 				// Only the first container starts visible. Others get hidden.
-				if ( target.getCustomData( 'cke_hasshared' ) )
+				var hasShared = target.getCustomData( 'cke_hasshared' );
+				if ( hasShared && hasShared != editor.name ) {
 					space.hide();
-				else
-					target.setCustomData( 'cke_hasshared', 1 );
+				} else {
+					target.setCustomData( 'cke_hasshared', editor.name );
+				}
 
 				// There's no need for the space to be selectable.
 				space.unselectable();
