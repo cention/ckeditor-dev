@@ -87,7 +87,7 @@
 					var hasSupportedImage = false;
 					if(editor.___fileArchiveImages.length > 0){
 						editor.___fileArchiveImages.forEach(function(image){
-							let isFirstItem = false;
+							var isFirstItem = false;
 							if( (image.value != null && image.value != "" && image.value.match(/\.(?:jpg|png|gif|jpeg|tiff)/gi)) || (image.name != null && image.name != "" && image.name.match(/\.(?:jpg|png|gif|jpeg|tiff)/gi))){
 								hasSupportedImage = true;
 								output.push('\t\t\t<td style="padding-left: 5px; padding-top: 5px; padding-bottom: 5px;">');
