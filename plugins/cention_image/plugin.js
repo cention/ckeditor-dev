@@ -85,7 +85,7 @@
 					output.push("\t\t<tr>");
 
 					var hasSupportedImage = false;
-					if(editor.___fileArchiveImages.length > 0){
+					if(editor.___fileArchiveImages && editor.___fileArchiveImages.length > 0){
 						editor.___fileArchiveImages.forEach(function(image){
 							var isFirstItem = false;
 							if( (image.value != null && image.value != "" && image.value.match(/\.(?:jpg|png|gif|jpeg|tiff)/gi)) || (image.name != null && image.name != "" && image.name.match(/\.(?:jpg|png|gif|jpeg|tiff)/gi))){
