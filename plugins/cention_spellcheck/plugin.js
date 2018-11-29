@@ -151,7 +151,7 @@ CKEDITOR.plugins.add("cention_spellcheck", {
 		plugin.config.getText = function() {
 			return jQuery("<div />").append(plugin.editor.getData()).text()
 		};
-		plugin.config.webservice.path = "/Cention/web/spell/check";
+		plugin.config.webservice.path = urlForApplicationAction("spellcheck");
 		plugin.spellchecker = new jQuery.SpellChecker(plugin.editor.document.$.body, this.config);
 		plugin.spellchecker.on("check.success", function() {
 			alert(I("There are no misspelled words"));
