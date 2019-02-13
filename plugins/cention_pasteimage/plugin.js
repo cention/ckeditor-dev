@@ -153,7 +153,7 @@
 		if (file.type.match(/^image/)) {
 			img = editor.document.createElement('img', {
 				attributes: {
-					src: WFApplicationURI + 'Resources/Templates/Master.template/Images/ajax-loader-kit-blue.gif'
+					src: pathPrefix + 'img/ajax-loader-kit-blue.gif'
 				}
 			});
 
