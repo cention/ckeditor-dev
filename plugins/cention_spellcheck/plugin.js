@@ -23,7 +23,10 @@ CKEDITOR.plugins.add("cention_spellcheck", {
 		editor.addCommand("spellchecker", {
 			canUndo: false,
 			readOnly: 1,
-			exec: function() {
+			exec: function(editor, data) {
+				if(data && data.lang){
+					plugin.config.lang = data.lang;
+				}
 				plugin.toggle(editor);
 			}
 		});
