@@ -83,7 +83,7 @@
 					output.push('<div style="width: 450px; overflow-x: auto;">');
 					output.push('\t<table border="0" cellspacing="0" cellpadding="0">');
 					output.push("\t\t<tr>");
-
+					var host = location.protocol + "//" + location.hostname;
 					var hasSupportedImage = false;
 					if(editor.___fileArchiveImages && editor.___fileArchiveImages.length > 0){
 						editor.___fileArchiveImages.forEach(function(image){
@@ -100,6 +100,7 @@
 									output.push('\t\t\t\t\t\t<td align="center" style="width: 128px; height: 128px; border-radius: 5px 5px 5px 5px; border: 1px solid #A3D7FF;" onclick="CKEDITOR.tools.callFunction(', selectFunction, ', this);return false;">');
 								}
 								var src = (image.download ? image.download : (image.src ? image.src : ""));
+								if(src !== "") src = host +""+ src;
 								output.push('\t\t\t\t\t\t\t<img src="', src , '" style="max-width: 120px; max-height: 120px;">');
 								output.push("\t\t\t\t\t\t</td>");
 								output.push("\t\t\t\t\t</tr>");
