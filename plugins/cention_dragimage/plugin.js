@@ -38,6 +38,11 @@
 					event.stopPropagation();
 					event.preventDefault();
 				}, false);
+				parent.addEventListener('paste', function(event) {
+					event.stopPropagation();
+					event.preventDefault();
+					editableElement.on('paste', onPasteWithClipboard, null, { editor: editor });
+				}, false);
 				parent.addEventListener('drop', function(event) {
 					event.stopPropagation();
 					event.preventDefault();
