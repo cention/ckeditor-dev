@@ -39,8 +39,6 @@
 					event.preventDefault();
 				}, false);
 				parent.addEventListener('paste', function(event) {
-					event.stopPropagation();
-					event.preventDefault();
 					editableElement.on('paste', onPasteWithClipboard, null, { editor: editor });
 				}, false);
 				parent.addEventListener('drop', function(event) {
@@ -125,6 +123,8 @@
 				(clipboardData.items && typeof jQuery.isArray(clipboardData.items) &&
 					clipboardData.items[i].type.match(imageType)))
 			{
+				event.data.stopPropagation();
+				event.data.preventDefault();
 				handleImagePasteFromClipboard(clipboardData.items[i], event.listenerData.editor);
 			}
 		}
