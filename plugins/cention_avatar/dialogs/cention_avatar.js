@@ -68,10 +68,10 @@ CKEDITOR.dialog.add( 'cention_avatar', function( editor ) {
 
 		natural;
 
+	var host = location.protocol + "//" + location.hostname;
 	if(editor.___avatarImage) {
-		var avatarPhoto = editor.___avatarImage;
-		// var avatarPhoto = "";
-
+		// var avatarPhoto = editor.___avatarImage;
+		var AvatarSrc = host +""+ editor.___avatarImage;
 	}
 
 	// Validates dimension. Allowed values are:
@@ -359,8 +359,8 @@ CKEDITOR.dialog.add( 'cention_avatar', function( editor ) {
 				},
 				commit: function( widget ) {
 					// widget.setData( 'src', this.getValue() );
-					widget.setData( 'src', avatarPhoto );
-					
+					widget.setData( 'src', AvatarSrc );
+
 				}
 				// validate: CKEDITOR.dialog.validate.notEmpty( lang.urlMissing )
 			}
