@@ -69,9 +69,8 @@ CKEDITOR.dialog.add( 'cention_avatar', function( editor ) {
 		natural;
 
 	var host = location.protocol + "//" + location.hostname;
-	if(editor.___avatarImage) {
-		// var avatarPhoto = editor.___avatarImage;
-		var AvatarSrc = host +""+ editor.___avatarImage;
+	if(editor.___avatarTemplate) {
+		var AvatarSrc = host +""+ editor.___avatarTemplate;
 	}
 
 	// Validates dimension. Allowed values are:
