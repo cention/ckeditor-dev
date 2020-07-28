@@ -245,7 +245,7 @@
 		function run(el, replacer, cke) {
 			// Check if an element was not passed.
 			// This will only work in the browser
-			if(typeof el === 'undefined') {
+			if(typeof el === 'undefined' && el != null) {
 				// Check if an element was configured. If not, default to the body.
 				if (defaultConfig.only_crawl_id) {
 					el = document.getElementById(defaultConfig.only_crawl_id);
