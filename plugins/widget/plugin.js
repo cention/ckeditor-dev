@@ -396,9 +396,11 @@
 
 				var widget = this.getByElement( wrapper );
 				// Fire postponed #ready event.
-				widget.ready = true;
-				widget.fire( 'ready' );
-				widget.focus();
+				if ( widget ) {
+					widget.ready = true;
+					widget.fire( 'ready' );
+					widget.focus();
+				}
 			}
 		},
 
@@ -999,7 +1001,9 @@
 					this.element.removeAttribute( 'data-widget' );
 				this.element.removeAttributes( [ 'data-cke-widget-data', 'data-cke-widget-keep-attr' ] );
 				this.element.removeClass( 'cke_widget_element' );
-				this.element.replace( this.wrapper );
+				if ( this.wrapper ) {
+					this.element.replace( this.wrapper );
+				}
 			}
 
 			this.wrapper = null;

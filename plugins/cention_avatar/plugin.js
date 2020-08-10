@@ -128,7 +128,9 @@
 			if ( editor.widgets.focused == this.widget )
 				this.focused = true;
 
-			editor.widgets.destroy( this.widget );
+			if( editor ) {
+				editor.widgets.destroy( this.widget );
+			}
 
 			// Mark widget was destroyed.
 			this.deflated = true;
@@ -706,12 +708,19 @@
 				wrapper.removeStyle( 'float' );
 			}
 			else {
-				if ( align == 'none' )
-					wrapper.removeStyle( 'float' );
-				else
-					wrapper.setStyle( 'float', align );
-
-				wrapper.removeStyle( 'text-align' );
+				if ( align == 'none' ) {
+					if( wrapper ) {
+						wrapper.removeStyle( 'float' );
+					}
+				}
+				else{
+					if( wrapper ) {
+						wrapper.setStyle( 'float', align );
+					}
+				}
+				if ( wrapper ) {
+					wrapper.removeStyle( 'text-align' );
+				}
 			}
 		}
 	}
