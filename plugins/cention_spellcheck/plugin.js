@@ -117,7 +117,7 @@
 	create: function() {
 		this.editor.setReadOnly(true);
 		this.editor.commands.spellchecker.toggleState();
-        jQuery('.cke_button__spellchecker_label').text(I('Finish spell check'));
+		jQuery('.cke_button__spellchecker_label').text(I('Finish spell check'));
 		jQuery('.spellchecker-icon').addClass('cke_button__spellchecker_icon_select');
 		this.editorWindow = this.editor.document.getWindow().$;
 		this.createSpellchecker();
@@ -134,7 +134,7 @@
 			this.editor.setReadOnly(false);
 			this.editor.commands.spellchecker.toggleState();
 			jQuery('.cke_button__spellchecker_label').text(I('Perform spell check'));
-            jQuery('.spellchecker-icon').removeClass('cke_button__spellchecker_icon_select');
+			jQuery('.spellchecker-icon').removeClass('cke_button__spellchecker_icon_select');
 			jQuery(this.editorWindow).off(".spellchecker");
 			this.editor.fire("change");
 		}
