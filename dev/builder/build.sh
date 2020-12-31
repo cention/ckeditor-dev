@@ -57,16 +57,21 @@ echo "Starting CKBuilder..."
 
 JAVA_ARGS=${ARGS// -t / } # Remove -t from args.
 
-VERSION=$(grep '"version":' ./../../package.json | sed $'s/[\t\",: ]//g; s/version//g' | tr -d '[[:space:]]')
-REVISION=$(git rev-parse --verify --short HEAD)
+#VERSION=$(grep '"version":' ./../../package.json | sed $'s/[\t\",: ]//g; s/version//g' | tr -d '[[:space:]]')
+VERSION="4.4.8 DEV"
+#REVISION=$(git rev-parse --verify --short HEAD)
+REVISION=$(git rev-parse --verify --short HEAD 2>/dev/null) || true
 
 # If the current revision is not tagged with any CKE version, it means it's a "dirty" build. We
 # mark such builds with a " DEV" suffix. true is needed because of "set -e".
-TAG=$(git tag --points-at HEAD) || true
+#TAG=$(git tag --points-at HEAD) || true
+
+TAG=$(git symbolic-ref -q --short HEAD 2>/dev/null || git describe --tags --exact-match 2>/dev/null) || true
 
 # This fancy construction check str length of $TAG variable.
 if [ ${#TAG} -le 0 ];
 then
+	VERSION=$TAG
 	VERSION="$VERSION DEV"
 fi
 
