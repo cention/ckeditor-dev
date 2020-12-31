@@ -1,4 +1,4 @@
-﻿CKEDITOR.plugins.add("cention_spellcheck", {
+CKEDITOR.plugins.add("cention_spellcheck", {
 	config: {
 		lang: "en_US",
 		parser: "html",
