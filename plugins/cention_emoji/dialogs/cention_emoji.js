@@ -233,7 +233,7 @@ CKEDITOR.dialog.add('cention_emoji', function(editor) {
 					var charLabelId = 'cke_cention_emoji_label_' + i + '_' +
 						CKEDITOR.tools.getNextNumber();
 
-					html.push('<td class="cke_dark_background" style="cursor: default;text-align: center" role="presentation">' +
+					html.push('<td class="cke_dark_background emoji_char" style="cursor: default;text-align: center" role="presentation">' +
 						'<a href="javascript: void(0);" role="option"' +
 						' aria-posinset="' + ( i + 1 ) + '"', ' aria-setsize="' +
 						size + '"', ' aria-labelledby="' + charLabelId + '"',
@@ -359,8 +359,8 @@ CKEDITOR.dialog.add('cention_emoji', function(editor) {
 
 	return {
 		title: editor.lang.cention_emoji.title,
-		minWidth: 270,
-		minHeight: 120,
+		minWidth: 500,
+		minHeight: 160,
 		contents: [{
 			id: 'peopleTab',
 			label: 'PeopleLabel',

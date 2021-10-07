@@ -39,6 +39,12 @@ as follows:
 Comments in this file will give more details about each of the above blocks.
 */
 
+/*cention variables*/
+:root {
+	--centionBlue:#0c87f7;
+	--gray:#6d6d6d;
+}
+
 /* The outer container of the dialog. */
 .cke_dialog
 {
@@ -52,11 +58,11 @@ Comments in this file will give more details about each of the above blocks.
 {
 	z-index: 1;
 	border: solid 1px #ddd;
-	padding: 5px;
+	padding: 15px;
 	background-color: #fff;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
-	border-radius: 5px;
+	border-radius: 10px;
 }
 
 /* Due to our reset we have to recover the styles of some elements. */
@@ -70,17 +76,18 @@ Comments in this file will give more details about each of the above blocks.
 {
 	font-weight: bold;
 	font-size: 14px;
-	padding: 3px 3px 8px;
+	padding: 0px 0px 10px 0;
 	cursor: move;
 	position: relative;
 	border-bottom: 1px solid #eee;
+	color: var(--gray);
 }
 
 /* The outer part of the dialog contants, which contains the contents body
    and the footer. */
 .cke_dialog_contents
 {
-	background-color: #ebebeb;
+	/* background-color: #ebebeb; */
 	border: solid 1px #fff;
 	border-bottom: none;
 	overflow: auto;
@@ -107,7 +114,7 @@ Comments in this file will give more details about each of the above blocks.
 .cke_dialog_footer
 {
 	text-align: right;
-	background-color: #ebebeb;
+	/* background-color: #ebebeb; */
 	border: solid 1px #fff;
 	border-bottom: none;
 	-moz-border-radius-bottomleft: 5px;
@@ -194,21 +201,28 @@ The .cke_dialog_tab_selected class is appended to the active tab.
 /* A single tab (an <a> element). */
 a.cke_dialog_tab
 {
-	background-image: url(images/sprites.png);
+	/* background-image: url(images/sprites.png); */
 	background-repeat: repeat-x;
 	background-position: 0 -1323px;
 
-	background-color: #ebebeb;
+	/* background-color: #ebebeb; */
 	height: 14px;
 	padding: 4px 8px;
 	display: inline-block;
 	cursor: pointer;
+	color: #a7a7a7;
+    border-bottom: 2px solid #a7a7a7;
+    margin-right: 15px;
+	font-weight: bold;
+	transition: .25s;
 
 }
 
 a.cke_dialog_tab:hover
 {
-	background-color: #f1f1e3;
+	/* background-color: #f1f1e3; */
+	color: var(--centionBlue);
+    border-color: var(--centionBlue);
 }
 
 .cke_hc a.cke_dialog_tab:hover
@@ -221,6 +235,8 @@ a.cke_dialog_tab_selected
 {
 	background-position: 0 -1279px;
 	cursor: default;
+	color: var(--centionBlue);
+    border-bottom: 2px solid var(--centionBlue);
 }
 
 .cke_hc a.cke_dialog_tab_selected
@@ -252,8 +268,8 @@ a.cke_dialog_tab_disabled
 
 .cke_dialog_close_button
 {
-	background-image: url(images/sprites.png);
-	background-repeat: no-repeat;
+	/* background-image: url(images/sprites.png); */
+	/* background-repeat: no-repeat; */
 	background-position: 0 -1022px;
 	position: absolute;
 	cursor: pointer;
@@ -261,6 +277,11 @@ a.cke_dialog_tab_disabled
 	height: 20px;
 	width: 20px;
 	top: 5px;
+}
+.cke_dialog_close_button:after {
+	content: "\00d7";
+    color: var(--gray);
+    font-size: 16px;
 }
 
 .cke_dialog_close_button span
@@ -285,7 +306,7 @@ a.cke_dialog_tab_disabled
 
 .cke_dialog_close_button
 {
-	top: 7px;
+	top: 15px;
 }
 
 /*
@@ -396,7 +417,7 @@ div.cke_dialog_ui_input_text,
 div.cke_dialog_ui_input_password
 {
 	background-color: white;
-	border: 1px solid #a0a0a0;
+	border: 1px solid #d3d3d3;
 	padding: 1px 0px;
 }
 
@@ -420,6 +441,11 @@ The textarea field to input larger text.
 +-----------------------------------------------------+
 */
 
+.cke_dialog_ui_input_text:focus-visible {
+	outline: #56acf9 solid .5px;
+	border: 0;
+}
+
 textarea.cke_dialog_ui_input_textarea
 {
 	background-color: white;
@@ -433,7 +459,7 @@ textarea.cke_dialog_ui_input_textarea
 div.cke_dialog_ui_input_textarea
 {
 	background-color: white;
-	border: 1px solid #a0a0a0;
+	border: 1px solid #d3d3d3;
 	padding: 1px 0px;
 }
 
@@ -457,9 +483,9 @@ a.cke_dialog_ui_button
 	border-collapse: separate;
 	cursor: default;
 
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
 	background: transparent url(images/sprites.png) repeat-x scroll 0 -1069px;
 	text-align: center;
 	display: inline-block;
@@ -471,17 +497,26 @@ a.cke_dialog_ui_button
 	width: 60px;
 	padding: 5px 20px 5px;
 	display: inline-block;
+	color: white;
+	font-weight: bold;
+	cursor: pointer;
 }
 
 /* Special class appended to the Ok button. */
 a.cke_dialog_ui_button_ok
 {
-	background-position: 0 -1144px;
+	/* background-position: 0 -1144px; */
+	background: var(--centionBlue);
+	background-color: .2s ease;
+}
+a.cke_dialog_ui_button_ok:hover
+{
+	background: #56acf9;
 }
 
 a.cke_dialog_ui_button_ok span
 {
-	background: transparent url(images/sprites.png) no-repeat scroll right -1216px;
+	/* background: transparent url(images/sprites.png) no-repeat scroll right -1216px; */
 }
 
 .cke_rtl a.cke_dialog_ui_button_ok span
@@ -492,12 +527,19 @@ a.cke_dialog_ui_button_ok span
 /* Special class appended to the Cancel button. */
 a.cke_dialog_ui_button_cancel
 {
-	background-position: 0 -1105px;
+	/* background-position: 0 -1105px; */
+	background: #c4c4c4;
+}
+a.cke_dialog_ui_button_cancel:hover
+{
+	/* background-position: 0 -1105px; */
+	background: #dedede;
+	background-color: .2s ease;
 }
 
 a.cke_dialog_ui_button_cancel span
 {
-	background: transparent url(images/sprites.png) no-repeat scroll right -1242px;
+	/* background: transparent url(images/sprites.png) no-repeat scroll right -1242px; */
 }
 
 .cke_rtl a.cke_dialog_ui_button_cancel span
@@ -557,7 +599,7 @@ Styles for other dialog element types.
 */
 select.cke_dialog_ui_input_select
 {
-	border: 1px solid #a0a0a0;
+	border: 1px solid #d3d3d3;
 	background-color: white;
 }
 
@@ -572,12 +614,12 @@ select.cke_dialog_ui_input_select
  */
 .cke_dialog .cke_dark_background
 {
-	background-color: #eaead1;
+	background-color: #e0f3ff;
 }
 
 .cke_dialog .cke_light_background
 {
-	background-color: #ffffbe;
+	background-color: #8ac8ff;
 }
 
 .cke_dialog .cke_centered
@@ -752,7 +794,7 @@ High Contrast Mode.
 
 .cke_dialog_body label
 {
-	display: inline;
+	display: inline-block;
 	margin-bottom: auto;
 	cursor: default;
 }
@@ -839,7 +881,10 @@ a.cke_smile:hover img
 .cke_dialog_ui_input_select:focus,
 .cke_btn_over
 {
-	outline: 1px dotted #696969;
+	/* outline: 1px dotted #696969; */
+    outline: none;
+	border: 1px solid #56acf9;
+    box-shadow: 0 0 3px 2px #0c87f747;
 }
 
 .cke_iframe_shim
@@ -852,4 +897,12 @@ a.cke_smile:hover img
 	filter:alpha(opacity=0);
 	width:100%;
 	height:100%;
+}
+
+td.cke_dark_background.emoji_char {
+	padding: 4px;
+}
+
+td.cke_dark_background.emoji_char a > span {
+	font-size: 20px;
 }
