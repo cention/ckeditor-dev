@@ -107,6 +107,8 @@ CKEDITOR.plugins.add("cention_spellcheck", {
 		editor.ui.addButton("SpellChecker", {
 			label: I("Perform Spell Check"),
 			command: "spellchecker",
+			// icon: " icon-spellchecker ", (not suitable to use class as it causes dependency when its changed)
+			icon: "/ng/vendor/ckeditor/plugins/cention_spellcheck/icons/spellchecker-custom.png",
 			toolbar: "spellchecker,10"
 		});
 
@@ -128,6 +130,8 @@ CKEDITOR.plugins.add("cention_spellcheck", {
 		}, this));
 	},
 	destroy: function() {
+		//replace "cke_button__spellchecker_icon" class to avoid it overriding custom icon style
+		jQuery('.cke_button__spellchecker_icon').removeClass('cke_button__spellchecker_icon').addClass('cke_button__spellchecker_icon_custom');
 		if( this.spellchecker ) {
 			this.spellchecker.destroy();
 			this.spellchecker = null;
