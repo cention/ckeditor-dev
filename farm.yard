@@ -4,9 +4,9 @@
 		<execute program="bash" arguments="dev/builder/build.sh" />
 	</phase>
 	<phase id="install" depends="build">
-		<execute program="rm" arguments="-rf $(destination)/cention/share/ckeditor" />
-		<execute program="mkdir" arguments="-p $(destination)/cention/share/ferite/webframework/Public/Resources/Javascript" />
+		<execute program="rm" arguments="-rf $(destination)/cention/share/ckeditor" /> 
 		<execute program="cp" arguments="-r dev/builder/release/ckeditor $(destination)/cention/share/" />
-		<execute program="ln" arguments="-s /cention/share/ckeditor $(destination)/cention/share/ferite/webframework/Public/Resources/Javascript/ckeditor" />
+		<execute program="rm" arguments="-rf $(destination)/cention/www/web/vendor/ckeditor" />
+		<execute program="cp" arguments="-r dev/builder/release/ckeditor $(destination)/cention/www/web/vendor/ckeditor" />
 	</phase>
 </yard>
