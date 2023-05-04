@@ -119,27 +119,27 @@ CKEDITOR.plugins.add("cention_spellcheck", {
 	create: function() {
 		this.editor.setReadOnly(true);
 		this.editor.commands.spellchecker.toggleState();
-		jQuery('.cke_button__spellchecker_label').text(I('Finish spell check'));
-		jQuery('.spellchecker-icon').addClass('cke_button__spellchecker_icon_select');
+		$('.cke_button__spellchecker_label').text(I('Finish spell check'));
+		$('.spellchecker-icon').addClass('cke_button__spellchecker_icon_select');
 		this.editorWindow = this.editor.document.getWindow().$;
 		this.createSpellchecker();
 		this.spellchecker.check();
-		jQuery(this.editorWindow).on("scroll.spellchecker", jQuery.proxy(function() {
+		$(this.editorWindow).on("scroll.spellchecker", $.proxy(function() {
 			if( this.spellchecker.suggestBox )
 				this.spellchecker.suggestBox.close();
 		}, this));
 	},
 	destroy: function() {
 		//replace "cke_button__spellchecker_icon" class to avoid it overriding custom icon style
-		jQuery('.cke_button__spellchecker_icon').removeClass('cke_button__spellchecker_icon').addClass('cke_button__spellchecker_icon_custom');
+		$('.cke_button__spellchecker_icon').removeClass('cke_button__spellchecker_icon').addClass('cke_button__spellchecker_icon_custom');
 		if( this.spellchecker ) {
 			this.spellchecker.destroy();
 			this.spellchecker = null;
 			this.editor.setReadOnly(false);
 			this.editor.commands.spellchecker.toggleState();
-			jQuery('.cke_button__spellchecker_label').text(I('Perform spell check'));
-			jQuery('.spellchecker-icon').removeClass('cke_button__spellchecker_icon_select');
-			jQuery(this.editorWindow).off(".spellchecker");
+			$('.cke_button__spellchecker_label').text(I('Perform spell check'));
+			$('.spellchecker-icon').removeClass('cke_button__spellchecker_icon_select');
+			$(this.editorWindow).off(".spellchecker");
 			this.editor.fire("change");
 		}
 	},
@@ -154,10 +154,10 @@ CKEDITOR.plugins.add("cention_spellcheck", {
 	createSpellchecker: function() {
 		var plugin = this;
 		plugin.config.getText = function() {
-			return jQuery("<div />").append(plugin.editor.getData()).text()
+			return $("<div />").append(plugin.editor.getData()).text()
 		};
 		plugin.config.webservice.path = "/Cention/web/spell/check";
-		plugin.spellchecker = new jQuery.SpellChecker(plugin.editor.document.$.body, this.config);
+		plugin.spellchecker = new $.SpellChecker(plugin.editor.document.$.body, this.config);
 		plugin.spellchecker.on("check.success", function() {
 			alert(I("There are no misspelled words"));
 			plugin.destroy();
@@ -173,12 +173,12 @@ CKEDITOR.plugins.add("cention_spellcheck", {
 		return function() {
 			var d = plugin.editor,
 				a = (this.wordElement.data("firstElement") || this.wordElement)[0],
-				c = jQuery(d.container.$).find("iframe").offset(),
-				g = jQuery(d.container.$).offset(),
-				h = jQuery(a).offset(),
+				c = $(d.container.$).find("iframe").offset(),
+				g = $(d.container.$).offset(),
+				h = $(a).offset(),
 				d = h.left + g.left,
 				a = h.top + g.top + (c.top - g.top) + a.offsetHeight,
-				a = a - jQuery(plugin.editorWindow).scrollTop();
+				a = a - $(plugin.editorWindow).scrollTop();
 			if((typeof this.config.suggestBoxScrollBar !== "undefined") &&
 				(typeof this.config.suggestBoxScrollBar.overflowY !==
 					"undefined") &&
