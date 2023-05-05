@@ -120,7 +120,7 @@
 			var type = clipboardData.types[i];
 
 			if (type.match(imageType) ||
-				(clipboardData.items && typeof jQuery.isArray(clipboardData.items) &&
+				(clipboardData.items && typeof $.isArray(clipboardData.items) &&
 					clipboardData.items[i].type.match(imageType)))
 			{
 				event.data.stopPropagation();
