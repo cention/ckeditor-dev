@@ -5,6 +5,7 @@
 # Build CKEditor using the default settings (and build.js).
 
 set -e
+set -x
 
 echo "CKBuilder - Builds a release version of ckeditor4."
 echo ""
