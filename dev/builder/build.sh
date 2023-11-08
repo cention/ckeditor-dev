@@ -76,6 +76,7 @@ then
 	VERSION="$VERSION DEV"
 fi
 
+java -version
 java -jar ckbuilder/$CKBUILDER_VERSION/ckbuilder.jar --build ../../ release $JAVA_ARGS --version="$VERSION" --revision="$REVISION" --overwrite
 
 # Copy and build tests.
