@@ -5,6 +5,7 @@
 # Build CKEditor using the default settings (and build.js).
 
 set -e
+set -x
 
 echo "CKBuilder - Builds a release version of ckeditor4."
 echo ""
@@ -75,7 +76,10 @@ then
 	VERSION="$VERSION DEV"
 fi
 
-java -jar ckbuilder/$CKBUILDER_VERSION/ckbuilder.jar --build ../../ release $JAVA_ARGS --version="$VERSION" --revision="$REVISION" --overwrite
+java -version
+java -jar ckbuilder/$CKBUILDER_VERSION/ckbuilder.jar --build ../../ release $JAVA_ARGS --version="$VERSION" --revision="$REVISION" --overwrite 
+#--add-opens java.desktop/sun.java2d=ALL-UNNAMED
+#--add-exports java.desktop/sun.java2d=ALL-UNNAMED
 
 # Copy and build tests.
 if [[ "$ARGS" == *\ \-t\ * ]]; then
