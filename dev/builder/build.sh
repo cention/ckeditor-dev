@@ -77,9 +77,10 @@ then
 fi
 
 java -version
-java -jar ckbuilder/$CKBUILDER_VERSION/ckbuilder.jar --build ../../ release $JAVA_ARGS --version="$VERSION" --revision="$REVISION" --overwrite 
+#java -jar ckbuilder/$CKBUILDER_VERSION/ckbuilder.jar --build ../../ release $JAVA_ARGS --version="$VERSION" --revision="$REVISION" --overwrite 
 #--add-opens java.desktop/sun.java2d=ALL-UNNAMED
 #--add-exports java.desktop/sun.java2d=ALL-UNNAMED
+java -jar ckbuilder/$CKBUILDER_VERSION/ckbuilder.jar --build ../../ release $JAVA_ARGS --version="$VERSION" --revision="$REVISION" --overwrite --add-opens java.desktop/sun.java2d=ALL-UNNAMED
 
 # Copy and build tests.
 if [[ "$ARGS" == *\ \-t\ * ]]; then
