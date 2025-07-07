@@ -146,7 +146,7 @@ CKEDITOR.plugins.add( 'confighelper',
 {
 	getPlaceholderCss : function()
     {
-        return '.placeholder{ color: #999; }';
+		return '.placeholder{ color: #999; font-style: italic; }';
     },
 
 	onLoad : function()
