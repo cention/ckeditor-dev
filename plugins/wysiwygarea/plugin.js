@@ -41,8 +41,6 @@
 				iframe.addClass( 'cke_wysiwyg_frame cke_reset' );
 
 				var contentSpace = editor.ui.space( 'contents' );
-				contentSpace.append( iframe );
-
 
 				// Asynchronous iframe loading is only required in IE>8 and Gecko (other reasons probably).
 				// Do not use it on WebKit as it'll break the browser-back navigation.
@@ -50,6 +48,7 @@
 				if ( useOnloadEvent )
 					iframe.on( 'load', onLoad );
 
+				contentSpace.append( iframe );
 				var frameLabel = editor.title,
 					helpLabel = editor.fire( 'ariaEditorHelpLabel', {} ).label;
 
@@ -154,6 +153,18 @@
 
 		body.contentEditable = true;
 
+		if ( CKEDITOR.env.gecko ) {
+			// Firefox may fail to properly activate contentEditable in iframes
+			// after document.write() on initial page load. Toggling designMode
+			// forces Firefox to re-initialize its internal editing state.
+			try {
+				doc.designMode = 'on';
+				setTimeout( function() {
+					doc.designMode = 'off';
+				}, 0 );
+			} catch ( e ) {}
+		}
+
 		if ( CKEDITOR.env.ie ) {
 			// Don't display the focus border.
 			body.hideFocus = true;
@@ -197,12 +208,11 @@
 			} );
 		}
 
-		// Fix problem with cursor not appearing in Webkit and IE11+ when clicking below the body (#10945, #10906).
+		// Fix problem with cursor not appearing in Webkit, Gecko and IE11+ when clicking below the body (#10945, #10906).
 		// Fix for older IEs (8-10 and QM) is placed inside selection.js.
-		if ( CKEDITOR.env.webkit || ( CKEDITOR.env.ie && CKEDITOR.env.version > 10 ) ) {
+		if ( CKEDITOR.env.webkit || CKEDITOR.env.gecko || ( CKEDITOR.env.ie && CKEDITOR.env.version > 10 ) ) {
 			doc.getDocumentElement().on( 'mousedown', function( evt ) {
 				if ( evt.data.getTarget().is( 'html' ) ) {
-					// IE needs this timeout. Webkit does not, but it does not cause problems too.
 					setTimeout( function() {
 						editor.editable().focus();
 					} );
